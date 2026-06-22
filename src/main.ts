@@ -1,5 +1,6 @@
 
-import { Game } from './controller/Game'
+import { GameCli } from './controller/GameCli'
 
-const game = new Game()
+const game = new GameCli()
+
 game.start()
