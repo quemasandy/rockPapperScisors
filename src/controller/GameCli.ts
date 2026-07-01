@@ -28,11 +28,12 @@ export class GameCli {
         
         const result = game.evaluateAnswer(userResponse)
 
-        if (result) {
-            console.log("ganaste")
+        if (!result) {
+            console.log("perdiste")
+            return
         }
 
-        console.log("perdiste")
+        console.log("ganaste")
     }
 }
 
