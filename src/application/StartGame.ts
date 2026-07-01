@@ -6,5 +6,7 @@ export class StartGame {
         this.game = new Game()
     }
 
-    
+    evaluateAnswer(answer: string) {
+        return this.game.evaluateAnswer(answer)
+    }
 }

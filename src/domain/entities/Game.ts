@@ -1,6 +1,6 @@
-import { Machine } from './Machine.ts'
-import { Player } from './Player.ts'
-import { Weapon } from './Weapon.ts';
+import { Machine } from './Machine'
+import { Player } from './Player'
+import { Weapon } from './Weapon';
 
 export class Game {
     private machine: Machine;
@@ -13,7 +13,13 @@ export class Game {
         this.machineWeapon = this.machine.getWeapon()
     }
 
-    start() {
+    evaluateAnswer(answer: string) {
+        const machineAnswer = this.machine.generateWeapon()
         
+        if (machineAnswer === answer) {
+            return true
+        }
+
+        return false
     }
 }

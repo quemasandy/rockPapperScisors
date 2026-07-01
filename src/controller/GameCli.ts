@@ -21,13 +21,18 @@ export class GameCli {
     async start() {
         const game = new StartGame()
 
-        const question = "'Piedra, Papel o Tijera. 1, 2, 3... '"
+        const question = "Piedra, Papel o Tijera. 1, 2, 3...\n"
         const userResponse = await this.askQuestion(question)
 
         console.log(`Elegiste: ${userResponse}`)
+        
+        const result = game.evaluateAnswer(userResponse)
 
-        // aquí usas userResponse para continuar el juego
-        // game.play(userResponse)
+        if (result) {
+            console.log("ganaste")
+        }
+
+        console.log("perdiste")
     }
 }
 
