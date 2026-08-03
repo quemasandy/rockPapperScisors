@@ -15,7 +15,7 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 
 | # | Subtarea | Concepto clave | Estado |
 |---|----------|----------------|--------|
-| 01 | [Crear Ports del dominio](./01-crear-ports.md) | Dependency Inversion, Interfaces | ⬜ |
+| 01 | [Crear Ports del dominio](./01-crear-ports.md) | Dependency Inversion, Interfaces | ✅ |
 | 02 | [Crear Adapter de infraestructura](./02-crear-adapter-infra.md) | Adapters, Implementación de Ports | ⬜ |
 | 03 | [Inyectar dependencias en entidades](./03-inyectar-en-entidades.md) | Dependency Injection en el dominio | ⬜ |
 | 04 | [Corregir lógica de negocio](./04-logica-de-negocio.md) | Domain Logic, Value Objects | ⬜ |

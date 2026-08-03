@@ -84,4 +84,4 @@ Pregúntate:
 
 Solo dice: *"Dame un número entre min y max"*. Eso es un Port puro. ✅
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
