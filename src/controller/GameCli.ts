@@ -1,8 +1,9 @@
 import { StartGame } from '../application/StartGame'
+import { RandomNumberGenerator } from '../domain/ports/RandomNumberGenerator'
 import * as readline from 'readline'
 
 export class GameCli {
-    constructor() { }
+    constructor(private randomNumberGenerator: RandomNumberGenerator) { }
 
     private askQuestion(prompt: string): Promise<string> {
         const rl = readline.createInterface({
@@ -19,7 +20,7 @@ export class GameCli {
     }
 
     async start() {
-        const game = new StartGame()
+        const game = new StartGame(this.randomNumberGenerator)
 
         const question = "Piedra, Papel o Tijera. 1, 2, 3...\n"
         const userResponse = await this.askQuestion(question)
