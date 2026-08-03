@@ -16,7 +16,7 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 | # | Subtarea | Concepto clave | Estado |
 |---|----------|----------------|--------|
 | 01 | [Crear Ports del dominio](./01-crear-ports.md) | Dependency Inversion, Interfaces | ✅ |
-| 02 | [Crear Adapter de infraestructura](./02-crear-adapter-infra.md) | Adapters, Implementación de Ports | ⬜ |
+| 02 | [Crear Adapter de infraestructura](./02-crear-adapter-infra.md) | Adapters, Implementación de Ports | ✅ |
 | 03 | [Inyectar dependencias en entidades](./03-inyectar-en-entidades.md) | Dependency Injection en el dominio | ⬜ |
 | 04 | [Corregir lógica de negocio](./04-logica-de-negocio.md) | Domain Logic, Value Objects | ⬜ |
 | 05 | [Crear Port del caso de uso](./05-port-caso-de-uso.md) | Input/Output Ports, DTOs | ⬜ |
@@ -28,6 +28,7 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 | 11 | [Configurar Vitest](./11-configurar-vitest.md) | Testing Setup | ⬜ |
 | 12 | [Tests del dominio](./12-tests-dominio.md) | Unit Testing, Fakes | ⬜ |
 | 13 | [Tests del caso de uso](./13-tests-use-case.md) | Integration Testing | ⬜ |
+| 14 | [Humble Object: Presenter y View](./14-humble-object-presenter.md) | Humble Object, Presenter, ViewModel | ⬜ |
 
 ## Diagrama de dependencias final
 
@@ -35,7 +36,10 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 main.ts (Composition Root)
    │
    ├──► GameCli (controller) ──► PlayGameInput (port)
-   │                                    ▲
+   │         │                          ▲
+   │         ├──► GameView (humble)     │
+   │         └──► GamePresenter ──► GameViewModel
+   │                                    
    ├──► PlayGameUseCase (application) ──┘ implements
    │         │
    │         └──► Game (domain) ──► RandomNumberGenerator (port)
