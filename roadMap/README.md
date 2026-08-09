@@ -17,7 +17,7 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 |---|----------|----------------|--------|
 | 01 | [Crear Ports del dominio](./01-crear-ports.md) | Dependency Inversion, Interfaces | ✅ |
 | 02 | [Crear Adapter de infraestructura](./02-crear-adapter-infra.md) | Adapters, Implementación de Ports | ✅ |
-| 03 | [Inyectar dependencias en entidades](./03-inyectar-en-entidades.md) | Dependency Injection en el dominio | ⬜ |
+| 03 | [Inyectar dependencias en entidades](./03-inyectar-en-entidades.md) | Dependency Injection en el dominio | ✅ |
 | 04 | [Corregir lógica de negocio](./04-logica-de-negocio.md) | Domain Logic, Value Objects | ⬜ |
 | 05 | [Crear Port del caso de uso](./05-port-caso-de-uso.md) | Input/Output Ports, DTOs | ⬜ |
 | 06 | [Refactorizar caso de uso](./06-refactorizar-use-case.md) | Use Case, Orquestación | ⬜ |
