@@ -104,4 +104,4 @@ expect(machine.generateWeapon()).toBe(Weapon.Rock);  // ¡Predecible!
 
 Eso era **imposible** antes. Sin inyección de dependencias, no hay tests unitarios confiables.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

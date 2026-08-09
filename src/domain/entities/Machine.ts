@@ -1,21 +1,12 @@
-import { RandomNumberGenerator } from "../ports/RandomNumberGenerator";
 import { Weapon } from "./Weapon";
+import { RandomNumberGenerator } from "../ports/RandomNumberGenerator";
 
 export class Machine {
-    private weapon: Weapon;
-    
-    constructor (private randomNumberGenerator: RandomNumberGenerator) {
-        this.weapon = this.generateWeapon();
-    }
+    constructor(private readonly randomGenerator: RandomNumberGenerator) {}
 
     generateWeapon(): Weapon {
-        const weapons = [Weapon.Rock, Weapon.Paper, Weapon.Scissors]
-        const randomNumber = this.randomNumberGenerator.generate(0, weapons.length)
-
-        return weapons[randomNumber]
-    }
-
-    getWeapon() {
-        return this.weapon
+        const weapons = [Weapon.Rock, Weapon.Paper, Weapon.Scissors];
+        const index = this.randomGenerator.generate(0, weapons.length - 1);
+        return weapons[index];
     }
 }
