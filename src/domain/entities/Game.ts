@@ -1,26 +1,38 @@
-import { Machine } from './Machine'
-import { Player } from './Player'
+import { Machine } from './Machine';
 import { Weapon } from './Weapon';
 import { RandomNumberGenerator } from '../ports/RandomNumberGenerator';
 
+export enum GameResult {
+    Win = "win",
+    Lose = "lose",
+    Draw = "draw",
+}
+
 export class Game {
     private machine: Machine;
-    private player: Player;
-    private machineWeapon: Weapon;
 
-    constructor(randomNumberGenerator: RandomNumberGenerator) {
-        this.machine = new Machine(randomNumberGenerator)
-        this.player = new Player()
-        this.machineWeapon = this.machine.getWeapon()
+    constructor(randomGenerator: RandomNumberGenerator) {
+        this.machine = new Machine(randomGenerator);
     }
 
-    evaluateAnswer(answer: string) {
-        const machineAnswer = this.machine.generateWeapon()
-        
-        if (machineAnswer === answer) {
-            return true
+    play(playerWeapon: Weapon): { result: GameResult; machineWeapon: Weapon } {
+        const machineWeapon = this.machine.generateWeapon();
+
+        if (playerWeapon === machineWeapon) {
+            return { result: GameResult.Draw, machineWeapon };
         }
 
-        return false
+        // Reglas de negocio: cada arma vence a exactamente una otra
+        const winsAgainst: Record<Weapon, Weapon> = {
+            [Weapon.Rock]: Weapon.Scissors,     // Piedra vence a Tijeras
+            [Weapon.Paper]: Weapon.Rock,         // Papel vence a Piedra
+            [Weapon.Scissors]: Weapon.Paper,     // Tijeras vence a Papel
+        };
+
+        const result = winsAgainst[playerWeapon] === machineWeapon
+            ? GameResult.Win
+            : GameResult.Lose;
+
+        return { result, machineWeapon };
     }
 }

@@ -1,4 +1,5 @@
-import { Game } from '../domain/entities/Game'
+import { Game, GameResult } from '../domain/entities/Game'
+import { Weapon } from '../domain/entities/Weapon'
 import { RandomNumberGenerator } from '../domain/ports/RandomNumberGenerator'
 
 export class StartGame {
@@ -7,7 +8,7 @@ export class StartGame {
         this.game = new Game(randomNumberGenerator)
     }
 
-    evaluateAnswer(answer: string) {
-        return this.game.evaluateAnswer(answer)
+    play(playerWeapon: Weapon): { result: GameResult; machineWeapon: Weapon } {
+        return this.game.play(playerWeapon)
     }
 }

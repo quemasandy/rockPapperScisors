@@ -101,4 +101,4 @@ Las reglas de negocio son el **corazón** de tu aplicación. Si cambias de CLI a
 
 El `winsAgainst` map es una forma elegante de codificar las reglas. ¿Qué pasaría si añadieras "Lagarto" y "Spock"? Solo modificas este map y el enum `Weapon`. Nada más. 🦎🖖
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
