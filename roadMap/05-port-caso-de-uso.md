@@ -64,4 +64,4 @@ Ahora el controller solo necesita saber:
 
 No le importa si detrás hay un `Game`, una `Machine`, o una conexión a un servidor remoto. Eso es **desacoplamiento real**.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
