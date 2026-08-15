@@ -1,4 +1,4 @@
-import { StartGame } from '../application/StartGame'
+import { PlayGameUseCase } from '../application/PlayGameUseCase'
 import { GameResult } from '../domain/entities/Game'
 import { Weapon } from '../domain/entities/Weapon'
 import { RandomNumberGenerator } from '../domain/ports/RandomNumberGenerator'
@@ -35,7 +35,7 @@ export class GameCli {
     }
 
     async start() {
-        const game = new StartGame(this.randomNumberGenerator)
+        const useCase = new PlayGameUseCase(this.randomNumberGenerator)
 
         const question = "Piedra, Papel o Tijera. 1, 2, 3...\n"
         const userResponse = await this.askQuestion(question)
@@ -47,7 +47,7 @@ export class GameCli {
             return
         }
 
-        const { result, machineWeapon } = game.play(playerWeapon)
+        const { result, machineWeapon } = useCase.execute(playerWeapon)
 
         console.log(`Elegiste: ${playerWeapon}`)
         console.log(`Máquina eligió: ${machineWeapon}`)

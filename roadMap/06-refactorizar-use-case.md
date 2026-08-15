@@ -91,4 +91,4 @@ export class PlayGameUseCase implements PlayGameInput {
 
 La regla es: **puedes crear cosas de tu misma capa o de capas internas, pero nunca de capas externas**.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
