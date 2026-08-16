@@ -121,4 +121,4 @@ MathRandom...    FakeRandom...
 
 Sin la interfaz `RandomNumberGenerator`, no podrías crear este Fake. Sin el Fake, no podrías hacer tests predecibles. **Los ports habilitan la testabilidad.**
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
