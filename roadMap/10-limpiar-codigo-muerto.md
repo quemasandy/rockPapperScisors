@@ -45,4 +45,4 @@ Asegúrate de que ningún archivo importa `Player` o `StartGame`.
 
 En Clean Architecture, **menos es más**. Cada clase debe justificar su existencia. Si no tiene lógica de negocio, ni es usada por nadie, elimínala. Siempre puedes recrearla cuando la necesites — para eso tienes Git.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
