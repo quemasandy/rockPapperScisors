@@ -155,4 +155,4 @@ Fíjate que `GameCli` no sabe:
 
 Solo sabe: *"Recibo un `Weapon`, llamo `execute()`, y muestro el resultado"*. Eso es un adapter desacoplado. ✅
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

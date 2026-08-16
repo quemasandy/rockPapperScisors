@@ -1,64 +1,74 @@
-import { PlayGameUseCase } from '../application/PlayGameUseCase'
-import { GameResult } from '../domain/entities/Game'
-import { Weapon } from '../domain/entities/Weapon'
-import { RandomNumberGenerator } from '../domain/ports/RandomNumberGenerator'
-import * as readline from 'readline'
+import * as readline from 'readline';
+import { Weapon } from '../domain/entities/Weapon';
+import { GameResult } from '../domain/entities/Game';
+import { PlayGameInput } from '../domain/ports/PlayGame';
+import { GameUI } from '../domain/ports/GameUI';
 
-export class GameCli {
-    constructor(private randomNumberGenerator: RandomNumberGenerator) { }
+export class GameCli implements GameUI {
+    constructor(private readonly playGame: PlayGameInput) {}
 
-    private askQuestion(prompt: string): Promise<string> {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        })
+    async askForWeapon(): Promise<Weapon | null> {
+        const prompt = "Piedra, Papel o Tijera.\n1) Piedra  2) Papel  3) Tijeras\nElige: ";
+        const input = await this.readLine(prompt);
+        return this.parseWeapon(input);
+    }
 
-        return new Promise((resolve) => {
-            rl.question(prompt, (answer) => {
-                rl.close()
-                resolve(answer)
-            })
-        })
+    showResult(playerWeapon: Weapon, machineWeapon: Weapon, result: GameResult): void {
+        console.log(`\nTú elegiste: ${playerWeapon}`);
+        console.log(`La máquina eligió: ${machineWeapon}`);
+
+        switch (result) {
+            case GameResult.Win:
+                console.log("🎉 ¡Ganaste!");
+                break;
+            case GameResult.Lose:
+                console.log("😢 Perdiste.");
+                break;
+            case GameResult.Draw:
+                console.log("🤝 ¡Empate!");
+                break;
+        }
+    }
+
+    showError(message: string): void {
+        console.log(`❌ Error: ${message}`);
+    }
+
+    async start(): Promise<void> {
+        const weapon = await this.askForWeapon();
+
+        if (!weapon) {
+            this.showError("Opción inválida. Elige 1, 2 o 3.");
+            return;
+        }
+
+        const { result, machineWeapon } = this.playGame.execute(weapon);
+        this.showResult(weapon, machineWeapon, result);
     }
 
     private parseWeapon(input: string): Weapon | null {
-        const normalized = input.trim().toLowerCase()
-        const weaponMap: Record<string, Weapon> = {
-            '1': Weapon.Rock,
-            '2': Weapon.Paper,
-            '3': Weapon.Scissors,
-            'piedra': Weapon.Rock,
-            'papel': Weapon.Paper,
-            'tijeras': Weapon.Scissors,
-        }
-        return weaponMap[normalized] ?? null
+        const map: Record<string, Weapon> = {
+            "1": Weapon.Rock,
+            "2": Weapon.Paper,
+            "3": Weapon.Scissors,
+            "piedra": Weapon.Rock,
+            "papel": Weapon.Paper,
+            "tijeras": Weapon.Scissors,
+        };
+        return map[input.toLowerCase().trim()] ?? null;
     }
 
-    async start() {
-        const useCase = new PlayGameUseCase(this.randomNumberGenerator)
+    private readLine(prompt: string): Promise<string> {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
 
-        const question = "Piedra, Papel o Tijera. 1, 2, 3...\n"
-        const userResponse = await this.askQuestion(question)
-
-        const playerWeapon = this.parseWeapon(userResponse)
-
-        if (!playerWeapon) {
-            console.log("Opción no válida. Usa: 1 (piedra), 2 (papel), 3 (tijeras)")
-            return
-        }
-
-        const { result, machineWeapon } = useCase.execute(playerWeapon)
-
-        console.log(`Elegiste: ${playerWeapon}`)
-        console.log(`Máquina eligió: ${machineWeapon}`)
-
-        if (result === GameResult.Draw) {
-            console.log("¡Empate!")
-        } else if (result === GameResult.Win) {
-            console.log("¡Ganaste!")
-        } else {
-            console.log("Perdiste")
-        }
+        return new Promise((resolve) => {
+            rl.question(prompt, (answer) => {
+                rl.close();
+                resolve(answer);
+            });
+        });
     }
 }
-

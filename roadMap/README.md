@@ -22,7 +22,7 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 | 05 | [Crear Port del caso de uso](./05-port-caso-de-uso.md) | Input/Output Ports, DTOs | ✅ |
 | 06 | [Refactorizar caso de uso](./06-refactorizar-use-case.md) | Use Case, Orquestación | ✅ |
 | 07 | [Crear Port de I/O para UI](./07-port-io-ui.md) | Output Port, UI Abstraction | ✅ |
-| 08 | [Refactorizar controller con DI](./08-refactorizar-controller.md) | Adapter, Inversión de Control | ⬜ |
+| 08 | [Refactorizar controller con DI](./08-refactorizar-controller.md) | Adapter, Inversión de Control | ✅ |
 | 09 | [Composition Root](./09-composition-root.md) | Wiring, Entry Point | ⬜ |
 | 10 | [Limpiar código muerto](./10-limpiar-codigo-muerto.md) | Code Hygiene | ⬜ |
 | 11 | [Configurar Vitest](./11-configurar-vitest.md) | Testing Setup | ⬜ |
