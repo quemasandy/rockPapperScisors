@@ -1,9 +1,19 @@
-import { MathRandomNumberGenerator } from './infra/MathRandomNumberGenerator'
-import { PlayGameUseCase } from './application/PlayGameUseCase'
-import { GameCli } from './controller/GameCli'
+// === COMPOSITION ROOT ===
+// Este es el ÚNICO archivo que conoce todas las capas.
+// Aquí se conectan las implementaciones concretas.
 
-const randomNumberGenerator = new MathRandomNumberGenerator()
-const playGame = new PlayGameUseCase(randomNumberGenerator)
-const game = new GameCli(playGame)
+import { MathRandomNumberGenerator } from './infra/MathRandomNumberGenerator';
+import { PlayGameUseCase } from './application/PlayGameUseCase';
+import { GameCli } from './controller/GameCli';
 
-game.start()
+// 1. Crear implementación de infraestructura
+const randomGenerator = new MathRandomNumberGenerator();
+
+// 2. Crear caso de uso, inyectando la dependencia de infra
+const playGameUseCase = new PlayGameUseCase(randomGenerator);
+
+// 3. Crear controller, inyectando el caso de uso
+const gameCli = new GameCli(playGameUseCase);
+
+// 4. Arrancar la aplicación
+gameCli.start();
