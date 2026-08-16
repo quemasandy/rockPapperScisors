@@ -83,4 +83,4 @@ class ApiGameUI implements GameUI {
 
 **El dominio, los casos de uso y la lógica de negocio NO cambian.** Solo conectas un adapter diferente en `main.ts`.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
