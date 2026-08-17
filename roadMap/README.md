@@ -28,7 +28,7 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 | 11 | [Configurar Vitest](./11-configurar-vitest.md) | Testing Setup | ✅ |
 | 12 | [Tests del dominio](./12-tests-dominio.md) | Unit Testing, Fakes | ✅ |
 | 13 | [Tests del caso de uso](./13-tests-use-case.md) | Integration Testing | ✅ |
-| 14 | [Humble Object: Presenter y View](./14-humble-object-presenter.md) | Humble Object, Presenter, ViewModel | ⬜ |
+| 14 | [Humble Object: Presenter y View](./14-humble-object-presenter.md) | Humble Object, Presenter, ViewModel | ✅ |
 
 ## Diagrama de dependencias final
 
