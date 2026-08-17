@@ -121,4 +121,4 @@ Si completaste todos los pasos hasta aquí, tu proyecto tiene:
 
 **Esto es Clean Architecture.** 🏛️
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
