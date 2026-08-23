@@ -3,9 +3,17 @@ import { Weapon } from '../domain/entities/Weapon';
 import { GameResult } from '../domain/entities/Game';
 import { PlayGameInput } from '../domain/ports/PlayGame';
 import { GameUI } from '../domain/ports/GameUI';
+import { GamePresenter } from '../presentation/GamePresenter';
+import { GameView } from './GameView';
 
 export class GameCli implements GameUI {
-    constructor(private readonly playGame: PlayGameInput) {}
+    private presenter: GamePresenter;
+    private view: GameView;
+
+    constructor(private readonly playGame: PlayGameInput) {
+        this.presenter = new GamePresenter();
+        this.view = new GameView();
+    }
 
     async askForWeapon(): Promise<Weapon | null> {
         const prompt = "Piedra, Papel o Tijera.\n1) Piedra  2) Papel  3) Tijeras\nElige: ";
@@ -14,24 +22,13 @@ export class GameCli implements GameUI {
     }
 
     showResult(playerWeapon: Weapon, machineWeapon: Weapon, result: GameResult): void {
-        console.log(`\nTú elegiste: ${playerWeapon}`);
-        console.log(`La máquina eligió: ${machineWeapon}`);
-
-        switch (result) {
-            case GameResult.Win:
-                console.log("🎉 ¡Ganaste!");
-                break;
-            case GameResult.Lose:
-                console.log("😢 Perdiste.");
-                break;
-            case GameResult.Draw:
-                console.log("🤝 ¡Empate!");
-                break;
-        }
+        const viewModel = this.presenter.presentResult(playerWeapon, machineWeapon, result);
+        this.view.showResult(viewModel);
     }
 
     showError(message: string): void {
-        console.log(`❌ Error: ${message}`);
+        const errorVM = this.presenter.presentError(message);
+        this.view.showError(errorVM);
     }
 
     async start(): Promise<void> {
