@@ -330,4 +330,4 @@ El patrón es el mismo. La clave es siempre la misma pregunta:
 
 Cuanto más humilde es el objeto que toca el I/O, más testeable es todo tu sistema. 🏛️
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
