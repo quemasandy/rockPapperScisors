@@ -54,7 +54,7 @@ una configuración que garantice que `dist` no incluya pruebas.
   `npm run typecheck` lo detecta; revertirlo inmediatamente.
 - Ejecutar el build y revisar los archivos generados.
 - Confirmar que ningún `.test.js`, fake o carpeta `tests` aparece en `dist`.
-- Ejecutar el entrypoint compilado con Node 20.
+- Ejecutar el entrypoint compilado con Node 24.
 
 ## ✅ Criterios de finalización
 

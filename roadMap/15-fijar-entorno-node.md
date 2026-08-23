@@ -19,12 +19,12 @@ por lo que `npm test` termina con un error de parseo de `??=`.
 
 ## ✅ Qué hacer
 
-1. Crear `.nvmrc` con la versión `20.19.6`, disponible en el entorno actual.
+1. Crear `.nvmrc` con la versión `24.19.0`, disponible en el entorno actual.
 2. Añadir a `package.json`:
 
 ```json
 "engines": {
-  "node": "^20.0.0 || ^22.0.0 || >=24.0.0"
+  "node": "^24.0.0"
 }
 ```
 
@@ -50,7 +50,7 @@ El resultado esperado es 4 archivos de test y 22 pruebas aprobadas.
 
 ## ✅ Criterios de finalización
 
-- `node --version` muestra `v20.19.6` después de `nvm use`.
+- `node --version` muestra `v24.19.0` después de `nvm use`.
 - `package.json` rechaza o advierte runtimes incompatibles.
 - Las 22 pruebas actuales pasan.
 - TypeScript compila sin emitir archivos.
@@ -61,4 +61,4 @@ La reproducibilidad no pertenece al dominio, pero protege todas las decisiones
 arquitectónicas posteriores: una prueba que ni siquiera arranca no puede defender
 ningún límite.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
