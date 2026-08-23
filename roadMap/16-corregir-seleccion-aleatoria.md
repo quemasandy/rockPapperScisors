@@ -56,4 +56,4 @@ Math.floor(Math.random() * (max - min + 1)) + min
 La inversión de dependencias vuelve testeable al dominio, pero no reemplaza las
 pruebas de los adapters. Cada lado de un boundary tiene riesgos diferentes.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
