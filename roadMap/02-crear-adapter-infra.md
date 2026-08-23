@@ -59,4 +59,4 @@ export class CryptoRandomNumberGenerator implements RandomNumberGenerator {
 
 ¡No tocas **ni una línea** del dominio! Solo creas un nuevo Adapter y lo conectas en `main.ts`. Eso es el poder de Clean Architecture.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
