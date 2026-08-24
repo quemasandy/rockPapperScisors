@@ -17,3 +17,15 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Validación final con Node 24.19.0: `npm test` (29/29), `npx tsc --noEmit` y `git diff --check` pasan.
 - El CLI real acepta tanto la entrada numérica como la etiqueta española y mantiene la salida completamente en español.
 - TODO: ninguno para la tarea 17.
+
+## Tarea 18 — Convertir `Game` en dominio puro
+
+- Solicitud: implementar la tarea 18 del roadmap; entidades sin dependencias técnicas.
+- Alcance confirmado: `Game` recibirá ambas armas y `PlayGameUseCase` elegirá temporalmente el arma rival mediante `Machine`.
+- Compatibilidad: el DTO de aplicación y la UI conservan `machineWeapon`; el dominio usará `opponentWeapon`.
+- `Game` quedó sin constructor, `Machine`, ports ni aleatoriedad; recibe las dos armas conocidas.
+- La tabla `WINS_AGAINST` ahora es una constante inmutable del módulo.
+- `PlayGameUseCase` usa temporalmente `Machine`, invoca el dominio puro y adapta `opponentWeapon` al DTO existente `machineWeapon`.
+- Las nueve combinaciones llaman directamente a `Game.play` sin fakes ni mocks y verifican resultado y arma rival.
+- Validación final: `npm test` (28/28), `npx tsc --noEmit`, `git diff --check` y ejecución real del CLI pasan.
+- TODO: ninguno para la tarea 18; `Machine` y el port aleatorio se mantienen hasta la tarea 19.

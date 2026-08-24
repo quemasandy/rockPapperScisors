@@ -59,4 +59,4 @@ La prueba más fuerte de pureza es poder ejecutar todas las reglas con valores
 directos. Si una regla determinista necesita un mock técnico, probablemente hay
 dos responsabilidades mezcladas.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

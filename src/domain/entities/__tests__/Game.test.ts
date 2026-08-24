@@ -1,79 +1,50 @@
 import { describe, it, expect } from 'vitest';
 import { Game, GameResult } from '../Game';
 import { Weapon } from '../Weapon';
-import { FakeRandomNumberGenerator } from './FakeRandomNumberGenerator';
 
 describe('Game', () => {
-    // Helper: crea un Game donde la máquina siempre elige un arma específica
-    function createGameWithMachineWeapon(weaponIndex: number): Game {
-        return new Game(new FakeRandomNumberGenerator(weaponIndex));
-    }
-
     describe('Empates', () => {
-        it('Piedra vs Piedra = Empate', () => {
-            const game = createGameWithMachineWeapon(0); // Máquina: Piedra
-            const { result } = game.play(Weapon.Rock);
-            expect(result).toBe(GameResult.Draw);
-        });
+        it.each([
+            ['Piedra vs Piedra = Empate', Weapon.Rock, Weapon.Rock],
+            ['Papel vs Papel = Empate', Weapon.Paper, Weapon.Paper],
+            ['Tijeras vs Tijeras = Empate', Weapon.Scissors, Weapon.Scissors],
+        ])('%s', (_description, playerWeapon, opponentWeapon) => {
+            const game = new Game();
 
-        it('Papel vs Papel = Empate', () => {
-            const game = createGameWithMachineWeapon(1); // Máquina: Papel
-            const { result } = game.play(Weapon.Paper);
-            expect(result).toBe(GameResult.Draw);
-        });
-
-        it('Tijeras vs Tijeras = Empate', () => {
-            const game = createGameWithMachineWeapon(2); // Máquina: Tijeras
-            const { result } = game.play(Weapon.Scissors);
-            expect(result).toBe(GameResult.Draw);
+            expect(game.play(playerWeapon, opponentWeapon)).toEqual({
+                result: GameResult.Draw,
+                opponentWeapon,
+            });
         });
     });
 
     describe('Victorias del jugador', () => {
-        it('Piedra vence a Tijeras', () => {
-            const game = createGameWithMachineWeapon(2); // Máquina: Tijeras
-            const { result } = game.play(Weapon.Rock);
-            expect(result).toBe(GameResult.Win);
-        });
+        it.each([
+            ['Piedra vence a Tijeras', Weapon.Rock, Weapon.Scissors],
+            ['Papel vence a Piedra', Weapon.Paper, Weapon.Rock],
+            ['Tijeras vence a Papel', Weapon.Scissors, Weapon.Paper],
+        ])('%s', (_description, playerWeapon, opponentWeapon) => {
+            const game = new Game();
 
-        it('Papel vence a Piedra', () => {
-            const game = createGameWithMachineWeapon(0); // Máquina: Piedra
-            const { result } = game.play(Weapon.Paper);
-            expect(result).toBe(GameResult.Win);
-        });
-
-        it('Tijeras vence a Papel', () => {
-            const game = createGameWithMachineWeapon(1); // Máquina: Papel
-            const { result } = game.play(Weapon.Scissors);
-            expect(result).toBe(GameResult.Win);
+            expect(game.play(playerWeapon, opponentWeapon)).toEqual({
+                result: GameResult.Win,
+                opponentWeapon,
+            });
         });
     });
 
     describe('Derrotas del jugador', () => {
-        it('Piedra pierde contra Papel', () => {
-            const game = createGameWithMachineWeapon(1); // Máquina: Papel
-            const { result } = game.play(Weapon.Rock);
-            expect(result).toBe(GameResult.Lose);
-        });
+        it.each([
+            ['Piedra pierde contra Papel', Weapon.Rock, Weapon.Paper],
+            ['Papel pierde contra Tijeras', Weapon.Paper, Weapon.Scissors],
+            ['Tijeras pierde contra Piedra', Weapon.Scissors, Weapon.Rock],
+        ])('%s', (_description, playerWeapon, opponentWeapon) => {
+            const game = new Game();
 
-        it('Papel pierde contra Tijeras', () => {
-            const game = createGameWithMachineWeapon(2); // Máquina: Tijeras
-            const { result } = game.play(Weapon.Paper);
-            expect(result).toBe(GameResult.Lose);
-        });
-
-        it('Tijeras pierde contra Piedra', () => {
-            const game = createGameWithMachineWeapon(0); // Máquina: Piedra
-            const { result } = game.play(Weapon.Scissors);
-            expect(result).toBe(GameResult.Lose);
-        });
-    });
-
-    describe('Devuelve el arma de la máquina', () => {
-        it('debería informar qué arma eligió la máquina', () => {
-            const game = createGameWithMachineWeapon(0); // Máquina: Piedra
-            const { machineWeapon } = game.play(Weapon.Scissors);
-            expect(machineWeapon).toBe(Weapon.Rock);
+            expect(game.play(playerWeapon, opponentWeapon)).toEqual({
+                result: GameResult.Lose,
+                opponentWeapon,
+            });
         });
     });
 });
