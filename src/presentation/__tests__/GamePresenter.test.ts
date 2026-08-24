@@ -6,6 +6,18 @@ import { GameResult } from '../../domain/entities/Game';
 describe('GamePresenter', () => {
     const presenter = new GamePresenter();
 
+    it.each([
+        [Weapon.Rock, 'piedra'],
+        [Weapon.Paper, 'papel'],
+        [Weapon.Scissors, 'tijeras'],
+    ])('debería traducir %s como %s', (weapon, expectedText) => {
+        const vm = presenter.presentResult(weapon, weapon, GameResult.Draw);
+
+        expect(vm.playerWeaponText).toBe(expectedText);
+        expect(vm.machineWeaponText).toBe(expectedText);
+        expect(vm.fullOutput).not.toMatch(/\b(?:rock|paper|scissors)\b/);
+    });
+
     it('debería formatear un resultado de victoria con emoji 🎉', () => {
         const vm = presenter.presentResult(Weapon.Rock, Weapon.Scissors, GameResult.Win);
 

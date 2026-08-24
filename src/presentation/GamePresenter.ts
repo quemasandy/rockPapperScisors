@@ -7,14 +7,19 @@ import { GameViewModel, ErrorViewModel } from './GameViewModel';
 // en un ViewModel con todo el formato listo.
 // NO toca console.log, NO toca readline. Solo datos puros.
 export class GamePresenter {
+    private readonly weaponTextMap: Record<Weapon, string> = {
+        [Weapon.Rock]: 'piedra',
+        [Weapon.Paper]: 'papel',
+        [Weapon.Scissors]: 'tijeras',
+    };
 
     presentResult(
         playerWeapon: Weapon,
         machineWeapon: Weapon,
         result: GameResult
     ): GameViewModel {
-        const playerWeaponText = playerWeapon;
-        const machineWeaponText = machineWeapon;
+        const playerWeaponText = this.weaponTextMap[playerWeapon];
+        const machineWeaponText = this.weaponTextMap[machineWeapon];
 
         const emojiMap: Record<GameResult, string> = {
             [GameResult.Win]: '🎉',

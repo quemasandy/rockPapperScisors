@@ -1,5 +1,5 @@
 export enum Weapon {
-    Rock = "piedra",
-    Paper = "papel",
-    Scissors = "tijeras",
+    Rock = "rock",
+    Paper = "paper",
+    Scissors = "scissors",
 }

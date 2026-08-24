@@ -59,4 +59,4 @@ Un modelo interno neutral permite crear otra UI o idioma sin editar las reglas d
 negocio. La independencia se comprueba observando qué cambia ante una decisión de
 presentación.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

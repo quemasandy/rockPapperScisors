@@ -41,7 +41,7 @@ en verde.
 |---|----------|----------------|--------|
 | 15 | [Fijar el entorno de ejecución](./15-fijar-entorno-node.md) | Reproducibilidad, Node compatible | ✅ |
 | 16 | [Corregir la selección aleatoria](./16-corregir-seleccion-aleatoria.md) | Test de regresión, límites inclusivos | ✅ |
-| 17 | [Neutralizar el lenguaje del dominio](./17-neutralizar-lenguaje-dominio.md) | Dominio independiente de idioma/UI | ⬜ |
+| 17 | [Neutralizar el lenguaje del dominio](./17-neutralizar-lenguaje-dominio.md) | Dominio independiente de idioma/UI | ✅ |
 | 18 | [Convertir `Game` en dominio puro](./18-purificar-game.md) | Entidades sin dependencias técnicas | ⬜ |
 | 19 | [Crear el port semántico del oponente](./19-port-opponent-weapon-provider.md) | Ports orientados al negocio | ⬜ |
 | 20 | [Dar propiedad correcta a los ports](./20-reubicar-ports-aplicacion.md) | Ownership de boundaries | ⬜ |
