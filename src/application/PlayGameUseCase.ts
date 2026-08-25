@@ -1,20 +1,16 @@
 import { Game } from '../domain/entities/Game';
-import { Machine } from '../domain/entities/Machine';
 import { Weapon } from '../domain/entities/Weapon';
 import { PlayGameInput, PlayGameOutput } from '../domain/ports/PlayGame';
-import { RandomNumberGenerator } from '../domain/ports/RandomNumberGenerator';
+import { OpponentWeaponProvider } from './ports/OpponentWeaponProvider';
 
 export class PlayGameUseCase implements PlayGameInput {
-    private game: Game;
-    private machine: Machine;
-
-    constructor(randomGenerator: RandomNumberGenerator) {
-        this.game = new Game();
-        this.machine = new Machine(randomGenerator);
-    }
+    constructor(
+        private readonly game: Game,
+        private readonly opponentWeaponProvider: OpponentWeaponProvider,
+    ) {}
 
     execute(playerWeapon: Weapon): PlayGameOutput {
-        const opponentWeapon = this.machine.generateWeapon();
+        const opponentWeapon = this.opponentWeaponProvider.choose();
         const round = this.game.play(playerWeapon, opponentWeapon);
 
         return {

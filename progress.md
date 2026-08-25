@@ -29,3 +29,16 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Las nueve combinaciones llaman directamente a `Game.play` sin fakes ni mocks y verifican resultado y arma rival.
 - Validación final: `npm test` (28/28), `npx tsc --noEmit`, `git diff --check` y ejecución real del CLI pasan.
 - TODO: ninguno para la tarea 18; `Machine` y el port aleatorio se mantienen hasta la tarea 19.
+
+## Tarea 19 — Crear el port semántico del oponente
+
+- Solicitud: implementar la tarea 19 del roadmap; ports orientados al negocio.
+- Se creó `OpponentWeaponProvider.choose(): Weapon` en la capa de aplicación.
+- `PlayGameUseCase` ahora recibe `Game` y el provider, pide el arma rival y la entrega al dominio.
+- `MathRandomOpponentWeaponProvider` concentra la selección con `Math.random` sobre las tres armas.
+- Se eliminaron `Machine`, `RandomNumberGenerator`, `MathRandomNumberGenerator` y sus pruebas/fake.
+- Prueba de orquestación: el fake entrega `Weapon.Rock`, se invoca una sola vez y `Game.play` recibe exactamente esa arma.
+- Pruebas del adapter: extremos válidos, ambos lados de las divisiones `1/3` y `2/3`, las tres armas alcanzables y ninguna respuesta `undefined`.
+- Validación: 30/30 tests y TypeScript pasan con Node 24.19.0; el CLI real conserva entrada y salida.
+- Nota de entorno: el `node` global es 14.15.4; se usó el Node 24.19.0 requerido por `package.json`.
+- TODO: ninguno para la tarea 19.

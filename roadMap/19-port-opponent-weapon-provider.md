@@ -59,4 +59,4 @@ Math.floor(Math.random() * weapons.length)
 La abstracción correcta no describe la herramienta externa; describe la capacidad
 que la política interna solicita a esa herramienta.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
