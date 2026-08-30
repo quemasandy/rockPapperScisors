@@ -1,25 +1,28 @@
-import { Weapon } from '../domain/entities/Weapon';
 import { GameResult } from '../domain/entities/Game';
+import { Weapon } from '../domain/entities/Weapon';
+import {
+    PlayGameOutputBoundary,
+    PlayGameResponse,
+} from '../application/ports/PlayGame';
 import { GameViewModel, ErrorViewModel } from './GameViewModel';
 
-// El Presenter es el objeto TESTEABLE.
-// Recibe datos crudos del dominio y los transforma
-// en un ViewModel con todo el formato listo.
-// NO toca console.log, NO toca readline. Solo datos puros.
-export class GamePresenter {
+export interface GameView {
+    showResult(viewModel: GameViewModel): void;
+    showError(viewModel: ErrorViewModel): void;
+}
+
+export class GamePresenter implements PlayGameOutputBoundary {
     private readonly weaponTextMap: Record<Weapon, string> = {
         [Weapon.Rock]: 'piedra',
         [Weapon.Paper]: 'papel',
         [Weapon.Scissors]: 'tijeras',
     };
 
-    presentResult(
-        playerWeapon: Weapon,
-        machineWeapon: Weapon,
-        result: GameResult
-    ): GameViewModel {
-        const playerWeaponText = this.weaponTextMap[playerWeapon];
-        const machineWeaponText = this.weaponTextMap[machineWeapon];
+    constructor(private readonly view: GameView) {}
+
+    present(response: PlayGameResponse): void {
+        const playerWeaponText = this.weaponTextMap[response.playerWeapon];
+        const machineWeaponText = this.weaponTextMap[response.opponentWeapon];
 
         const emojiMap: Record<GameResult, string> = {
             [GameResult.Win]: '🎉',
@@ -33,8 +36,8 @@ export class GamePresenter {
             [GameResult.Draw]: '¡Empate!',
         };
 
-        const resultEmoji = emojiMap[result];
-        const resultMessage = messageMap[result];
+        const resultEmoji = emojiMap[response.result];
+        const resultMessage = messageMap[response.result];
 
         const fullOutput = [
             `\nTú elegiste: ${playerWeaponText}`,
@@ -42,18 +45,18 @@ export class GamePresenter {
             `${resultEmoji} ${resultMessage}`,
         ].join('\n');
 
-        return {
+        this.view.showResult({
             playerWeaponText,
             machineWeaponText,
             resultEmoji,
             resultMessage,
             fullOutput,
-        };
+        });
     }
 
-    presentError(message: string): ErrorViewModel {
-        return {
+    presentError(message: string): void {
+        this.view.showError({
             errorMessage: `❌ Error: ${message}`,
-        };
+        });
     }
 }

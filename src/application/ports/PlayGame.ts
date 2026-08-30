@@ -1,13 +1,20 @@
 import { GameResult } from '../../domain/entities/Game';
 import { Weapon } from '../../domain/entities/Weapon';
 
-// Input Port: define la acción que la aplicación puede ejecutar
-export interface PlayGameInput {
-    execute(playerWeapon: Weapon): PlayGameOutput;
+export interface PlayGameRequest {
+    playerWeapon: Weapon;
 }
 
-// Output DTO: estructura de datos que devuelve el caso de uso
-export interface PlayGameOutput {
+export interface PlayGameResponse {
+    playerWeapon: Weapon;
+    opponentWeapon: Weapon;
     result: GameResult;
-    machineWeapon: Weapon;
+}
+
+export interface PlayGameInputBoundary {
+    execute(request: PlayGameRequest): void;
+}
+
+export interface PlayGameOutputBoundary {
+    present(response: PlayGameResponse): void;
 }

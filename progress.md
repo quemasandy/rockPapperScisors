@@ -53,3 +53,16 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Validación final con Node 24.19.0: `npm test` (30/30), `npx tsc --noEmit`, `git diff --check` y smoke tests del CLI válido/inválido pasan.
 - Búsqueda arquitectónica confirmada: no quedan imports a `domain/ports`, referencias a `GameUI` ni la carpeta `src/domain/ports`.
 - TODO: ninguno para la tarea 20.
+
+## Tarea 21 — Implementar el Output Boundary canónico
+
+- Solicitud: implementar la tarea 21 del roadmap; flujo `Interactor → Presenter`.
+- Se definieron `PlayGameRequest`, `PlayGameResponse`, `PlayGameInputBoundary` y `PlayGameOutputBoundary` en aplicación.
+- `PlayGameUseCase` se renombró a `PlayGameInteractor`; ahora recibe el output boundary y entrega una única respuesta sin retornar un DTO.
+- Las pruebas del interactor usan un output spy y verifican ambas armas, el resultado del dominio, una sola entrega y retorno `undefined`.
+- `GamePresenter` implementa el output boundary, recibe una interfaz `GameView` y entrega un único ViewModel a la vista.
+- `ConsoleGameView` implementa esa interfaz; los tests del presenter usan exclusivamente una view spy.
+- `GameCli` ya no construye presenter ni view y no coordina la salida exitosa; `main.ts` conecta view, presenter e interactor.
+- Validación final con Node 24.19.0: `npm test` (29/29), `npx tsc --noEmit`, `git diff --check` y smoke tests del CLI válido/inválido pasan.
+- El roadmap y su índice marcan la tarea 21 como completada.
+- TODO: ninguno para la tarea 21.

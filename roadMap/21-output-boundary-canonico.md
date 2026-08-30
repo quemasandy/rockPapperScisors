@@ -72,4 +72,4 @@ export interface PlayGameOutputBoundary {
 El Output Boundary permite cambiar la presentación sin cambiar el caso de uso y,
 al mismo tiempo, evita que el controller tenga que reconstruir el flujo de salida.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

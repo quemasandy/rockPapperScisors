@@ -1,18 +1,13 @@
 import * as readline from 'readline';
 import { Weapon } from '../domain/entities/Weapon';
-import { GameResult } from '../domain/entities/Game';
-import { PlayGameInput } from '../application/ports/PlayGame';
+import { PlayGameInputBoundary } from '../application/ports/PlayGame';
 import { GamePresenter } from '../presentation/GamePresenter';
-import { GameView } from './GameView';
 
 export class GameCli {
-    private presenter: GamePresenter;
-    private view: GameView;
-
-    constructor(private readonly playGame: PlayGameInput) {
-        this.presenter = new GamePresenter();
-        this.view = new GameView();
-    }
+    constructor(
+        private readonly playGame: PlayGameInputBoundary,
+        private readonly presenter: GamePresenter,
+    ) {}
 
     async askForWeapon(): Promise<Weapon | null> {
         const prompt = "Piedra, Papel o Tijera.\n1) Piedra  2) Papel  3) Tijeras\nElige: ";
@@ -20,14 +15,8 @@ export class GameCli {
         return this.parseWeapon(input);
     }
 
-    showResult(playerWeapon: Weapon, machineWeapon: Weapon, result: GameResult): void {
-        const viewModel = this.presenter.presentResult(playerWeapon, machineWeapon, result);
-        this.view.showResult(viewModel);
-    }
-
     showError(message: string): void {
-        const errorVM = this.presenter.presentError(message);
-        this.view.showError(errorVM);
+        this.presenter.presentError(message);
     }
 
     async start(): Promise<void> {
@@ -38,8 +27,7 @@ export class GameCli {
             return;
         }
 
-        const { result, machineWeapon } = this.playGame.execute(weapon);
-        this.showResult(weapon, machineWeapon, result);
+        this.playGame.execute({ playerWeapon: weapon });
     }
 
     private parseWeapon(input: string): Weapon | null {
