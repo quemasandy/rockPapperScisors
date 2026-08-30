@@ -1,5 +1,5 @@
-import { Weapon } from '../entities/Weapon';
-import { GameResult } from '../entities/Game';
+import { GameResult } from '../../domain/entities/Game';
+import { Weapon } from '../../domain/entities/Weapon';
 
 // Input Port: define la acción que la aplicación puede ejecutar
 export interface PlayGameInput {

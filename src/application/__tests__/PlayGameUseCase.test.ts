@@ -3,6 +3,7 @@ import { PlayGameUseCase } from '../PlayGameUseCase';
 import { Weapon } from '../../domain/entities/Weapon';
 import { Game, GameResult } from '../../domain/entities/Game';
 import { FakeOpponentWeaponProvider } from './FakeOpponentWeaponProvider';
+import { PlayGameInput } from '../ports/PlayGame';
 
 describe('PlayGameUseCase', () => {
     it('debería devolver un PlayGameOutput con resultado y arma de la máquina', () => {
@@ -42,8 +43,8 @@ describe('PlayGameUseCase', () => {
     it('debería implementar la interfaz PlayGameInput', () => {
         const opponentWeaponProvider = new FakeOpponentWeaponProvider(Weapon.Rock);
         const useCase = new PlayGameUseCase(new Game(), opponentWeaponProvider);
+        const input: PlayGameInput = useCase;
 
-        // Verifica que tiene el método execute
-        expect(typeof useCase.execute).toBe('function');
+        expect(typeof input.execute).toBe('function');
     });
 });

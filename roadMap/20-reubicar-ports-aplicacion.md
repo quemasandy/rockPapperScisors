@@ -49,4 +49,4 @@ La inversión de dependencias trata sobre quién define el contrato, no sobre cr
 una carpeta global de interfaces. La política consumidora debe controlar la forma
 del boundary.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

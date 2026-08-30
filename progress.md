@@ -42,3 +42,14 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Validación: 30/30 tests y TypeScript pasan con Node 24.19.0; el CLI real conserva entrada y salida.
 - Nota de entorno: el `node` global es 14.15.4; se usó el Node 24.19.0 requerido por `package.json`.
 - TODO: ninguno para la tarea 19.
+
+## Tarea 20 — Dar propiedad correcta a los ports
+
+- Solicitud: implementar la tarea 20 del roadmap; ownership de boundaries.
+- `PlayGameInput` y `PlayGameOutput` ahora pertenecen a `application/ports`.
+- `PlayGameUseCase`, `GameCli`, sus pruebas y el composition root importan el contrato desde aplicación.
+- `GameCli` dejó de implementar el port de UI sin consumidor y se eliminaron `GameUI` y `domain/ports`.
+- El DTO de retorno se conserva sin cambios; el Output Boundary corresponde a la tarea 21.
+- Validación final con Node 24.19.0: `npm test` (30/30), `npx tsc --noEmit`, `git diff --check` y smoke tests del CLI válido/inválido pasan.
+- Búsqueda arquitectónica confirmada: no quedan imports a `domain/ports`, referencias a `GameUI` ni la carpeta `src/domain/ports`.
+- TODO: ninguno para la tarea 20.

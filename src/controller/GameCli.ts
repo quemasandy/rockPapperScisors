@@ -1,12 +1,11 @@
 import * as readline from 'readline';
 import { Weapon } from '../domain/entities/Weapon';
 import { GameResult } from '../domain/entities/Game';
-import { PlayGameInput } from '../domain/ports/PlayGame';
-import { GameUI } from '../domain/ports/GameUI';
+import { PlayGameInput } from '../application/ports/PlayGame';
 import { GamePresenter } from '../presentation/GamePresenter';
 import { GameView } from './GameView';
 
-export class GameCli implements GameUI {
+export class GameCli {
     private presenter: GamePresenter;
     private view: GameView;
 

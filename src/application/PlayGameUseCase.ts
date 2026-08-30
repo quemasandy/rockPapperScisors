@@ -1,7 +1,7 @@
 import { Game } from '../domain/entities/Game';
 import { Weapon } from '../domain/entities/Weapon';
-import { PlayGameInput, PlayGameOutput } from '../domain/ports/PlayGame';
 import { OpponentWeaponProvider } from './ports/OpponentWeaponProvider';
+import { PlayGameInput, PlayGameOutput } from './ports/PlayGame';
 
 export class PlayGameUseCase implements PlayGameInput {
     constructor(
