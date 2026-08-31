@@ -7,6 +7,7 @@ import { MathRandomOpponentWeaponProvider } from './infra/MathRandomOpponentWeap
 import { PlayGameInteractor } from './application/PlayGameInteractor';
 import { PlayGameInputBoundary } from './application/ports/PlayGame';
 import { GamePresenter } from './presentation/GamePresenter';
+import { GameController } from './controller/GameController';
 import { GameCli } from './controller/GameCli';
 import { ConsoleGameView } from './controller/ConsoleGameView';
 
@@ -25,8 +26,9 @@ const playGameInput: PlayGameInputBoundary = new PlayGameInteractor(
     presenter,
 );
 
-// 4. Crear controller, inyectando sus colaboradores
-const gameCli = new GameCli(playGameInput, presenter);
+// 4. Crear el adapter de entrada y conectarlo al driver CLI
+const controller = new GameController(playGameInput, presenter);
+const gameCli = new GameCli(controller);
 
 // 5. Arrancar la aplicación
 gameCli.start();

@@ -1,9 +1,10 @@
 import { GameResult } from '../domain/entities/Game';
 import { Weapon } from '../domain/entities/Weapon';
-import {
+import type {
     PlayGameOutputBoundary,
     PlayGameResponse,
 } from '../application/ports/PlayGame';
+import type { InvalidInputOutputBoundary } from '../controller/GameController';
 import { GameViewModel, ErrorViewModel } from './GameViewModel';
 
 export interface GameView {
@@ -11,7 +12,9 @@ export interface GameView {
     showError(viewModel: ErrorViewModel): void;
 }
 
-export class GamePresenter implements PlayGameOutputBoundary {
+export class GamePresenter
+    implements PlayGameOutputBoundary, InvalidInputOutputBoundary
+{
     private readonly weaponTextMap: Record<Weapon, string> = {
         [Weapon.Rock]: 'piedra',
         [Weapon.Paper]: 'papel',
@@ -54,9 +57,9 @@ export class GamePresenter implements PlayGameOutputBoundary {
         });
     }
 
-    presentError(message: string): void {
+    presentInvalidSelection(): void {
         this.view.showError({
-            errorMessage: `❌ Error: ${message}`,
+            errorMessage: '❌ Error: Opción inválida. Elige 1, 2 o 3.',
         });
     }
 }

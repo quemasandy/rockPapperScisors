@@ -66,3 +66,14 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Validación final con Node 24.19.0: `npm test` (29/29), `npx tsc --noEmit`, `git diff --check` y smoke tests del CLI válido/inválido pasan.
 - El roadmap y su índice marcan la tarea 21 como completada.
 - TODO: ninguno para la tarea 21.
+
+## Tarea 22 — Extraer el controller de entrada
+
+- `GameController` adapta la selección cruda del CLI al `PlayGameRequest`, normalizando mayúsculas y espacios.
+- Las seis entradas aceptadas y la validación quedan fuera de `GameCli`; una selección válida ejecuta una vez el input boundary.
+- `InvalidInputOutputBoundary` permite notificar entradas inválidas sin acoplar el controller al presenter concreto.
+- `GamePresenter` implementa el nuevo boundary y conserva el texto y el emoji del error.
+- `GameCli` se limita a leer una línea y entregarla intacta al controller.
+- Se agregaron pruebas para las seis entradas, normalización, texto desconocido y cadena vacía.
+- Validación final: `npm test` (38/38), `npx tsc --noEmit`, `git diff --check` y smoke tests del CLI válido/inválido pasan.
+- TODO: ninguno para la tarea 22.

@@ -64,4 +64,4 @@ export interface InvalidInputOutputBoundary {
 Validar en el controller protege a la aplicación de convenciones del protocolo sin
 convertir números de menú o palabras localizadas en reglas del dominio.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

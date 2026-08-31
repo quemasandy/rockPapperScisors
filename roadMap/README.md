@@ -46,7 +46,7 @@ en verde.
 | 19 | [Crear el port semántico del oponente](./19-port-opponent-weapon-provider.md) | Ports orientados al negocio | ✅ |
 | 20 | [Dar propiedad correcta a los ports](./20-reubicar-ports-aplicacion.md) | Ownership de boundaries | ✅ |
 | 21 | [Implementar el Output Boundary](./21-output-boundary-canonico.md) | Interactor → Presenter | ✅ |
-| 22 | [Extraer el controller de entrada](./22-extraer-game-controller.md) | Interface Adapter, validación | ⬜ |
+| 22 | [Extraer el controller de entrada](./22-extraer-game-controller.md) | Interface Adapter, validación | ✅ |
 | 23 | [Aislar los drivers de consola](./23-aislar-drivers-cli.md) | Frameworks & Drivers | ⬜ |
 | 24 | [Reorganizar las carpetas por anillos](./24-reorganizar-anillos.md) | Dependency Rule visible | ⬜ |
 | 25 | [Separar tests y test doubles](./25-separar-tests-produccion.md) | Frontera producción/testing | ⬜ |

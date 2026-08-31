@@ -65,14 +65,14 @@ describe('GamePresenter', () => {
         expect(view.errors).toHaveLength(0);
     });
 
-    it('presenta errores formateados a través de la vista', () => {
+    it('presenta una selección inválida con su texto y emoji a través de la vista', () => {
         const view = new GameViewSpy();
         const presenter = new GamePresenter(view);
 
-        presenter.presentError('Opción inválida');
+        presenter.presentInvalidSelection();
 
         expect(view.errors).toEqual([
-            { errorMessage: '❌ Error: Opción inválida' },
+            { errorMessage: '❌ Error: Opción inválida. Elige 1, 2 o 3.' },
         ]);
         expect(view.results).toHaveLength(0);
     });
