@@ -9,8 +9,9 @@
     "start": "ts-node src/main.ts",
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json",
-    "verify": "npm run typecheck && npm test && npm run build",
+    "verify": "npm run typecheck && npm test && npm run test:architecture && npm run build",
     "test": "vitest run",
+    "test:architecture": "depcruise src --config .dependency-cruiser.cjs",
     "test:watch": "vitest"
   },
   "keywords": [],
@@ -19,6 +20,7 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^26.0.0",
+    "dependency-cruiser": "^18.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"

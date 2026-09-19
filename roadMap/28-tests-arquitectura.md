@@ -59,4 +59,4 @@ se haya invertido.
 Una arquitectura protegida por pruebas deja de depender de memoria o disciplina
 individual. Las reglas importantes deben fallar de manera rápida y explicable.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

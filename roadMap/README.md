@@ -52,7 +52,7 @@ en verde.
 | 25 | [Separar tests y test doubles](./25-separar-tests-produccion.md) | Frontera producción/testing | ✅ |
 | 26 | [Separar build y type-check](./26-configurar-build-produccion.md) | Configuración de entrega | ✅ |
 | 27 | [Endurecer TypeScript](./27-endurecer-typescript.md) | Seguridad estática | ✅ |
-| 28 | [Automatizar la Dependency Rule](./28-tests-arquitectura.md) | Fitness functions arquitectónicas | ⬜ |
+| 28 | [Automatizar la Dependency Rule](./28-tests-arquitectura.md) | Fitness functions arquitectónicas | ✅ |
 | 29 | [Consolidar la documentación final](./29-documentar-arquitectura-final.md) | Decisiones y diagrama definitivo | ⬜ |
 
 > **Máxima pureza no significa máxima cantidad de interfaces.** Se crean
