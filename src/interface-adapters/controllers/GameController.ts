@@ -3,7 +3,7 @@ import type {
 } from '../../application/ports/input/PlayGameInputBoundary';
 import type {
     InvalidInputOutputBoundary,
-} from '../../application/ports/output/InvalidInputOutputBoundary';
+} from '../ports/InvalidInputOutputBoundary';
 import { Weapon } from '../../domain/Weapon';
 
 const weaponBySelection: Readonly<Record<string, Weapon>> = {

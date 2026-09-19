@@ -33,7 +33,6 @@ src/
 │   │   ├── input/
 │   │   │   └── PlayGameInputBoundary.ts
 │   │   └── output/
-│   │       ├── InvalidInputOutputBoundary.ts
 │   │       ├── OpponentWeaponProvider.ts
 │   │       └── PlayGameOutputBoundary.ts
 │   └── use-cases/
@@ -41,6 +40,8 @@ src/
 ├── interface-adapters/
 │   ├── controllers/
 │   │   └── GameController.ts
+│   ├── ports/
+│   │   └── InvalidInputOutputBoundary.ts
 │   ├── presenters/
 │   │   ├── GamePresenter.ts
 │   │   └── GameView.ts
@@ -102,15 +103,17 @@ exterior.
 | `PlayGameInputBoundary` | Application | `GameController` inicia el caso de uso | `PlayGameInteractor` |
 | `PlayGameOutputBoundary` | Application | `PlayGameInteractor` publica la respuesta | `GamePresenter` |
 | `OpponentWeaponProvider` | Application | `PlayGameInteractor` solicita un arma rival | `MathRandomOpponentWeaponProvider` |
-| `InvalidInputOutputBoundary` | Application | `GameController` notifica una selección inválida | `GamePresenter` |
+| `InvalidInputOutputBoundary` | Interface adapters | `GameController` notifica una selección inválida | `GamePresenter` |
 | `GameView` | Interface adapters | `GamePresenter` entrega ViewModels | `ConsoleGameView` |
 | `InputReader` | Driver CLI | `CliGameRunner` solicita texto | `ReadlineInputReader` |
 
-Los cuatro primeros viven en application: entrada, salidas y gateway. El boundary
-de entrada inválida permite que el controller notifique el rechazo sin importar
-el presenter concreto. Los dos últimos son abstracciones locales de anillos
-exteriores con un consumidor concreto; no se trasladan al dominio ni se
-generalizan más de lo necesario.
+Los tres primeros viven en application: entrada, salida y gateway. El boundary
+de entrada inválida pertenece a interface adapters porque el rechazo se detecta
+al traducir texto del CLI, antes de ejecutar el caso de uso; permite que el
+controller notifique el rechazo sin conocer el presenter concreto. Este contrato,
+`GameView` e `InputReader` son abstracciones locales de anillos exteriores con un
+consumidor concreto; no se trasladan a application o domain ni se generalizan más
+de lo necesario.
 
 ## Flujo de control en runtime
 

@@ -2,7 +2,7 @@ import { GameResult } from '../../domain/GameResult';
 import { Weapon } from '../../domain/Weapon';
 import type {
     InvalidInputOutputBoundary,
-} from '../../application/ports/output/InvalidInputOutputBoundary';
+} from '../ports/InvalidInputOutputBoundary';
 import type {
     PlayGameOutputBoundary,
     PlayGameResponse,

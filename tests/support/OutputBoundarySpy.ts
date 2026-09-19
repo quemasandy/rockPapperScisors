@@ -1,4 +1,4 @@
-import type { InvalidInputOutputBoundary } from '../../src/application/ports/output/InvalidInputOutputBoundary';
+import type { InvalidInputOutputBoundary } from '../../src/interface-adapters/ports/InvalidInputOutputBoundary';
 import type {
     PlayGameOutputBoundary,
     PlayGameResponse,
