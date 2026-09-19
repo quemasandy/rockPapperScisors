@@ -1,5 +1,11 @@
 # 01 — Crear Ports del Dominio
 
+> [!NOTE]
+> **Superada por la fase 2.** Este port técnico fue reemplazado por el gateway
+> semántico de la [tarea 19](./19-port-opponent-weapon-provider.md), y la
+> [tarea 20](./20-reubicar-ports-aplicacion.md) estableció que los contratos del
+> caso de uso pertenecen a `application`, no a `domain`.
+
 ## 🎯 Objetivo
 
 Crear las **interfaces (Ports)** que el dominio necesita para comunicarse con el mundo exterior, **sin conocer los detalles de implementación**.

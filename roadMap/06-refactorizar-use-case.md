@@ -1,5 +1,12 @@
 # 06 — Refactorizar el Caso de Uso
 
+> [!NOTE]
+> **Superada por la fase 2.** El caso de uso actual es `PlayGameInteractor`, usa
+> `OpponentWeaponProvider` y publica mediante `PlayGameOutputBoundary`. La
+> evolución quedó consolidada en las [tareas 19](./19-port-opponent-weapon-provider.md),
+> [20](./20-reubicar-ports-aplicacion.md) y
+> [21](./21-output-boundary-canonico.md).
+
 ## 🎯 Objetivo
 
 Refactorizar `StartGame.ts` → `PlayGameUseCase.ts`. El caso de uso debe **implementar el Input Port** y **recibir dependencias inyectadas**.

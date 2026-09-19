@@ -33,9 +33,8 @@ Cada archivo es una subtarea con explicación, código de ejemplo y verificació
 ## Fase 2 — Clean Architecture canónica
 
 Esta segunda fase corrige los límites que todavía son técnicos o están ubicados en
-la capa equivocada. Todas las tareas empiezan pendientes y deben realizarse en
-orden: cada una mantiene el proyecto compilando, ejecutándose y con sus pruebas
-en verde.
+la capa equivocada. Las tareas se realizaron en orden y cada una mantuvo el
+proyecto compilando, ejecutándose y con sus pruebas en verde.
 
 | # | Subtarea | Concepto clave | Estado |
 |---|----------|----------------|--------|
@@ -53,13 +52,13 @@ en verde.
 | 26 | [Separar build y type-check](./26-configurar-build-produccion.md) | Configuración de entrega | ✅ |
 | 27 | [Endurecer TypeScript](./27-endurecer-typescript.md) | Seguridad estática | ✅ |
 | 28 | [Automatizar la Dependency Rule](./28-tests-arquitectura.md) | Fitness functions arquitectónicas | ✅ |
-| 29 | [Consolidar la documentación final](./29-documentar-arquitectura-final.md) | Decisiones y diagrama definitivo | ⬜ |
+| 29 | [Consolidar la documentación final](./29-documentar-arquitectura-final.md) | Decisiones y diagrama definitivo | ✅ |
 
 > **Máxima pureza no significa máxima cantidad de interfaces.** Se crean
 > boundaries explícitos cuando existe un límite arquitectónico; una clase que no
 > cruza ningún límite no necesita una abstracción artificial.
 
-## Arquitectura obtenida al finalizar la fase 1
+## Arquitectura histórica al finalizar la fase 1
 
 ```
 main.ts (Composition Root)
@@ -83,33 +82,58 @@ Todavía existen ports de aplicación dentro de `domain`, dependencias técnicas
 las entidades y responsabilidades de entrada, control y salida concentradas en
 `GameCli`.
 
-## Arquitectura objetivo de la fase 2
+Las tareas históricas conservan esos pasos para explicar la evolución. Las
+decisiones reemplazadas están marcadas con **“Superada por la fase 2”** y enlazan
+la tarea que introdujo su reemplazo.
 
-El flujo de ejecución será:
+## Arquitectura final de la fase 2
 
-```text
-CLI Runner
-   │
-   ▼
-GameController ──► PlayGameInputBoundary ◄── PlayGameInteractor
-                                              │
-                         ┌────────────────────┼────────────────────┐
-                         ▼                    ▼                    ▼
-                       Game       OpponentWeaponProvider   PlayGameOutputBoundary
-                  (dominio puro)             ▲                    ▲
-                                              │                    │
-                                  Random Opponent Adapter     GamePresenter
-                                                                   │
-                                                                   ▼
-                                                            ConsoleGameView
-```
+La descripción canónica, el árbol completo y las razones de cada boundary están
+en [Arquitectura final](../docs/04-arquitectura-final.md).
 
-La dirección permitida de las dependencias de código será:
+### Flujo de control en runtime
+
+Estas flechas representan llamadas durante una ronda, no imports:
 
 ```text
-frameworks ──► interface-adapters ──► application ──► domain
-     main.ts puede conocer todas las capas porque es el Composition Root.
+Usuario
+  │
+  ▼
+ReadlineInputReader ──► CliGameRunner ──► GameController
+                                             ├── inválida ─► InvalidInputOutputBoundary ─► GamePresenter
+                                             └── válida ──► PlayGameInputBoundary
+                                                                  └──► PlayGameInteractor
+                                                                         ├──► OpponentWeaponProvider
+                                                                         │          └──► MathRandomOpponentWeaponProvider
+                                                                         ├──► Game
+                                                                         └──► PlayGameOutputBoundary ─► GamePresenter
+
+GamePresenter ──► GameView ──► ConsoleGameView ──► Usuario
 ```
+
+`GamePresenter` implementa ambos output boundaries y entrega ViewModels mediante
+`GameView`, cuya implementación concreta es `ConsoleGameView`.
+
+### Dirección de dependencias de código
+
+Estas flechas representan imports permitidos, siempre hacia políticas más
+internas:
+
+```text
+exterior                                                        interior
+
+frameworks ─────► interface-adapters ─────► application ─────► domain
+frameworks ───────────────────────────────► application
+frameworks ──────────────────────────────────────────────────► domain
+interface-adapters ──────────────────────────────────────────► domain
+
+main.ts (Composition Root) ──► todos los anillos
+```
+
+Cada anillo puede depender del mismo anillo o saltar a uno más interno. Nunca se
+permite la dirección contraria. `main.ts` puede conocer todas las capas para
+ensamblarlas, pero sigue sujeto a la prohibición de ciclos. La tarea 28 comprueba
+estas reglas, incluidos los `import type`, con `npm run test:architecture`.
 
 ## Frontera de testing
 
@@ -135,3 +159,7 @@ oponente en memoria; no abre procesos ni usa `stdin`.
 La fase no agrega interfaz web, persistencia, historial ni nuevos modos de juego.
 Su objetivo es hacer explícitos y verificables los límites del comportamiento
 actual.
+
+No se crean repositories, servicios web ni interfaces sin un consumidor real. Si
+aparece una necesidad nueva, la política consumidora define primero el contrato
+semántico y el mecanismo externo lo implementa después.

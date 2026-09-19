@@ -1,3 +1,9 @@
+# Registro histórico de progreso
+
+> Los nombres y estructuras mencionados aquí corresponden al estado de cada
+> tarea mientras se ejecutaba la fase 2. No describen necesariamente el diseño
+> vigente; consulta la [arquitectura final](./docs/04-arquitectura-final.md).
+
 Original prompt: implementa 16 — Corregir la selección aleatoria. Test de regresión, límites inclusivos.
 
 - Especificación revisada: `generate(min, max)` debe incluir ambos límites.

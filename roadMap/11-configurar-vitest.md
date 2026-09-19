@@ -1,5 +1,11 @@
 # 11 — Configurar Vitest
 
+> [!NOTE]
+> **Superada por la fase 2 en su estructura de tests.** Vitest continúa vigente,
+> pero las suites y doubles salieron de `src` en la
+> [tarea 25](./25-separar-tests-produccion.md), y la
+> [tarea 26](./26-configurar-build-produccion.md) separó type-check y build.
+
 ## 🎯 Objetivo
 
 Configurar **Vitest** como framework de testing para poder escribir tests unitarios del dominio y los casos de uso.

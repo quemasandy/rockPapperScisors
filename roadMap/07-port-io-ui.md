@@ -1,5 +1,12 @@
 # 07 — Crear Port de I/O para UI
 
+> [!NOTE]
+> **Superada por la fase 2.** `GameUI` no tenía un consumidor interno real y fue
+> eliminado en la [tarea 20](./20-reubicar-ports-aplicacion.md). La salida actual
+> usa `PlayGameOutputBoundary`, `GameView` y un driver de consola separados por
+> las [tareas 21](./21-output-boundary-canonico.md) y
+> [23](./23-aislar-drivers-cli.md).
+
 ## 🎯 Objetivo
 
 Crear una interfaz que abstraiga la interacción con el usuario (I/O), para que en el futuro puedas reemplazar la CLI por Web, REST API, o cualquier otra interfaz **sin tocar la lógica**.

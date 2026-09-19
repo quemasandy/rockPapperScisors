@@ -1,5 +1,11 @@
 # 09 — Composition Root (main.ts)
 
+> [!NOTE]
+> **Superada por la fase 2 en su wiring concreto.** `main.ts` conserva su papel
+> de Composition Root, pero los componentes y carpetas del ejemplo fueron
+> reemplazados por el flujo de las [tareas 21](./21-output-boundary-canonico.md) a
+> [24](./24-reorganizar-anillos.md).
+
 ## 🎯 Objetivo
 
 Convertir `main.ts` en la **Composition Root**: el único lugar donde se conectan todas las implementaciones concretas.

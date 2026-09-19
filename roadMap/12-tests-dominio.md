@@ -1,5 +1,11 @@
 # 12 — Tests del Dominio
 
+> [!NOTE]
+> **Superada por la fase 2 en sus sujetos y ubicación.** `Machine` y sus fakes se
+> eliminaron en la [tarea 19](./19-port-opponent-weapon-provider.md); `Game` se
+> prueba hoy con dos armas explícitas y las suites viven fuera de `src` según la
+> [tarea 25](./25-separar-tests-produccion.md).
+
 ## 🎯 Objetivo
 
 Escribir tests unitarios para las entidades del dominio (`Machine` y `Game`), demostrando que la lógica de negocio funciona correctamente **sin infraestructura**.

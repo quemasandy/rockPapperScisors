@@ -1,5 +1,11 @@
 # 03 — Inyectar Dependencias en las Entidades
 
+> [!NOTE]
+> **Superada por la fase 2.** `Game` dejó de conocer aleatoriedad en la
+> [tarea 18](./18-purificar-game.md), y `Machine` junto con
+> `RandomNumberGenerator` se eliminaron en la
+> [tarea 19](./19-port-opponent-weapon-provider.md).
+
 ## 🎯 Objetivo
 
 Modificar `Machine.ts` para que **reciba** su dependencia (`RandomNumberGenerator`) en vez de crearla internamente.

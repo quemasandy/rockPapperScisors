@@ -1,5 +1,11 @@
 # 02 — Crear Adapter de Infraestructura
 
+> [!NOTE]
+> **Superada por la fase 2.** La idea de aislar `Math.random` sigue vigente, pero
+> el adapter técnico fue sustituido por `MathRandomOpponentWeaponProvider` en la
+> [tarea 19](./19-port-opponent-weapon-provider.md) y ubicado en `frameworks` por
+> la [tarea 24](./24-reorganizar-anillos.md).
+
 ## 🎯 Objetivo
 
 Crear la **implementación concreta** del port `RandomNumberGenerator` en la capa de infraestructura.

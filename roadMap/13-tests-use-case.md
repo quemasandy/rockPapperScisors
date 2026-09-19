@@ -1,5 +1,13 @@
 # 13 — Tests del Caso de Uso
 
+> [!NOTE]
+> **Superada por la fase 2.** Las pruebas actuales cubren
+> `PlayGameInteractor`, `OpponentWeaponProvider` y la entrega al output boundary;
+> esos reemplazos se introdujeron en las
+> [tareas 19](./19-port-opponent-weapon-provider.md) y
+> [21](./21-output-boundary-canonico.md), y se reubicaron en la
+> [tarea 25](./25-separar-tests-produccion.md).
+
 ## 🎯 Objetivo
 
 Escribir tests para `PlayGameUseCase`, verificando que la capa de **application** orquesta correctamente al dominio.

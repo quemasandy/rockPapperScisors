@@ -44,6 +44,15 @@ pedagógicos válidos, pero no representan el diseño objetivo de la fase 2.
 - Verificar que el árbol documentado coincida con `src`.
 - Ejecutar `npm run verify` y registrar el comando como verificación final.
 
+## 🧾 Verificación final registrada
+
+- Los enlaces relativos de los 35 archivos Markdown revisados existen.
+- El árbol documentado coincide con los 17 módulos TypeScript de `src`.
+- `Machine`, `GameUI` y `RandomNumberGenerator` no aparecen en producción; sus
+  menciones restantes describen estados históricos o tareas de reemplazo.
+- `npm run verify` pasa: type-check, 44 tests en 9 suites,
+  `test:architecture` sobre 17 módulos y 34 dependencias, y build productivo.
+
 ## ✅ Criterios de finalización
 
 - La documentación distingue arquitectura histórica, actual y objetivo cumplido.
@@ -58,4 +67,4 @@ La documentación final no debe celebrar una forma de carpetas, sino explicar qu
 cambios quedan aislados, quién posee cada contrato y cómo el proyecto impide que
 esas fronteras se degraden.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

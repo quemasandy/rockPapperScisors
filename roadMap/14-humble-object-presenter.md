@@ -1,5 +1,13 @@
 # 14 — Humble Object: Presenter, ViewModel y View
 
+> [!NOTE]
+> **Superada por la fase 2 en sus nombres y wiring.** El patrón Humble Object se
+> mantiene, pero `GamePresenter`, `GameView` y `ConsoleGameView` quedaron unidos
+> por el output boundary y separados por anillos en las
+> [tareas 21](./21-output-boundary-canonico.md),
+> [23](./23-aislar-drivers-cli.md) y
+> [24](./24-reorganizar-anillos.md).
+
 ## 🎯 Objetivo
 
 Aplicar el **patrón Humble Object** (Capítulo 23 de Clean Architecture) al proyecto, separando tu `GameCli` en tres piezas claras:

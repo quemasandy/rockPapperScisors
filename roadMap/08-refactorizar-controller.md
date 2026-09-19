@@ -1,5 +1,12 @@
 # 08 — Refactorizar Controller con Inyección de Dependencias
 
+> [!NOTE]
+> **Superada por la fase 2.** El antiguo `GameCli` se dividió en
+> `GameController`, `CliGameRunner`, presenter y view. Las responsabilidades
+> finales se definieron en las [tareas 21](./21-output-boundary-canonico.md),
+> [22](./22-extraer-game-controller.md) y
+> [23](./23-aislar-drivers-cli.md).
+
 ## 🎯 Objetivo
 
 Refactorizar `GameCli.ts` para que:

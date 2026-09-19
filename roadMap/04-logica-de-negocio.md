@@ -1,5 +1,12 @@
 # 04 — Corregir la Lógica de Negocio
 
+> [!NOTE]
+> **Superada por la fase 2 en su implementación.** Las reglas de victoria siguen
+> siendo dominio, pero `Game` ahora recibe ambas armas y ya no construye
+> `Machine` ni consume `RandomNumberGenerator`; ese diseño final se introdujo en
+> las [tareas 18](./18-purificar-game.md) y
+> [19](./19-port-opponent-weapon-provider.md).
+
 ## 🎯 Objetivo
 
 Implementar correctamente las **reglas del juego** Piedra-Papel-Tijera dentro del dominio, y crear un `GameResult` como parte del lenguaje del dominio.

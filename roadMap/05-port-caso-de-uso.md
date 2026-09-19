@@ -1,5 +1,11 @@
 # 05 — Crear Port del Caso de Uso (Input Port)
 
+> [!NOTE]
+> **Superada por la fase 2.** El input port se trasladó desde `domain` a
+> `application` en la [tarea 20](./20-reubicar-ports-aplicacion.md), y el DTO de
+> retorno fue reemplazado por un output boundary en la
+> [tarea 21](./21-output-boundary-canonico.md).
+
 ## 🎯 Objetivo
 
 Crear la interfaz que define **qué puede hacer** la aplicación (caso de uso), y los DTOs que comunican datos entre capas.
