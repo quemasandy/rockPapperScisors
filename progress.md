@@ -99,3 +99,13 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - El build genera 17 archivos JavaScript productivos, sin tests, fakes ni carpetas `tests` o `__tests__`.
 - Validación final con Node 24.19.0: `npm run verify` (42/42), inspección de `dist`, ejecución de una ronda desde `dist/main.js` y `git diff --check` pasan.
 - TODO: ninguno para la tarea 26.
+
+## Tarea 27 — Endurecer TypeScript
+
+- La configuración base activa `noUncheckedIndexedAccess`, `noUnusedLocals`, `noUnusedParameters` y `forceConsistentCasingInFileNames` para producción y tests.
+- `MathRandomOpponentWeaponProvider` comprueba el resultado del acceso al arreglo y lanza `RangeError` si `Math.random` incumple su rango `[0, 1)`.
+- Las pruebas del adapter cubren valores fuera de contrato por debajo y por encima del rango permitido.
+- La prueba del presenter valida explícitamente que el resultado exista antes de leerlo.
+- No se introdujeron `any`, non-null assertions ni directivas para silenciar el compilador.
+- Validación final con Node 24.19.0: `npm run verify` (44/44), búsqueda de escapes y `git diff --check` pasan.
+- TODO: ninguno para la tarea 27.

@@ -51,7 +51,7 @@ en verde.
 | 24 | [Reorganizar las carpetas por anillos](./24-reorganizar-anillos.md) | Dependency Rule visible | ✅ |
 | 25 | [Separar tests y test doubles](./25-separar-tests-produccion.md) | Frontera producción/testing | ✅ |
 | 26 | [Separar build y type-check](./26-configurar-build-produccion.md) | Configuración de entrega | ✅ |
-| 27 | [Endurecer TypeScript](./27-endurecer-typescript.md) | Seguridad estática | ⬜ |
+| 27 | [Endurecer TypeScript](./27-endurecer-typescript.md) | Seguridad estática | ✅ |
 | 28 | [Automatizar la Dependency Rule](./28-tests-arquitectura.md) | Fitness functions arquitectónicas | ⬜ |
 | 29 | [Consolidar la documentación final](./29-documentar-arquitectura-final.md) | Decisiones y diagrama definitivo | ⬜ |
 

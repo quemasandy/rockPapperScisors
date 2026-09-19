@@ -56,4 +56,4 @@ Añadir a `compilerOptions`:
 Un compilador estricto convierte supuestos implícitos en decisiones visibles. La
 solución correcta no es callarlo, sino representar o controlar el caso inseguro.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completada

@@ -20,9 +20,14 @@ describe('GamePresenter', () => {
         });
 
         expect(view.results).toHaveLength(1);
-        expect(view.results[0].playerWeaponText).toBe(expectedText);
-        expect(view.results[0].machineWeaponText).toBe(expectedText);
-        expect(view.results[0].fullOutput).not.toMatch(/\b(?:rock|paper|scissors)\b/);
+        const result = view.results[0];
+        if (result === undefined) {
+            throw new Error('Expected the presenter to show one result.');
+        }
+
+        expect(result.playerWeaponText).toBe(expectedText);
+        expect(result.machineWeaponText).toBe(expectedText);
+        expect(result.fullOutput).not.toMatch(/\b(?:rock|paper|scissors)\b/);
         expect(view.errors).toHaveLength(0);
     });
 

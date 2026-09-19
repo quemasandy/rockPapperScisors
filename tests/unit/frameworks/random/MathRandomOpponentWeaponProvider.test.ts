@@ -34,4 +34,18 @@ describe('MathRandomOpponentWeaponProvider', () => {
         expect(chosenWeapons).toEqual([Weapon.Rock, Weapon.Paper, Weapon.Scissors]);
         expect(chosenWeapons).not.toContain(undefined);
     });
+
+    it.each([-Number.EPSILON, 1])(
+        'rechaza el valor fuera de contrato %d de Math.random',
+        (random) => {
+            vi.spyOn(Math, 'random').mockReturnValue(random);
+            const provider = new MathRandomOpponentWeaponProvider();
+
+            expect(() => provider.choose()).toThrowError(
+                new RangeError(
+                    'Math.random() must return a value in the range [0, 1).',
+                ),
+            );
+        },
+    );
 });
