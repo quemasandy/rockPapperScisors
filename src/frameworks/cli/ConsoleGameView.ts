@@ -1,5 +1,8 @@
-import { GameView } from '../presentation/GamePresenter';
-import { ErrorViewModel, GameViewModel } from '../presentation/GameViewModel';
+import type { GameView } from '../../interface-adapters/presenters/GameView';
+import type {
+    ErrorViewModel,
+    GameViewModel,
+} from '../../interface-adapters/view-models/GameViewModel';
 
 // La View es el objeto humilde: solo vuelca ViewModels ya formateados.
 export class ConsoleGameView implements GameView {

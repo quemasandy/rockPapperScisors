@@ -2,10 +2,12 @@ import { describe, expect, it } from 'vitest';
 import type {
     PlayGameInputBoundary,
     PlayGameRequest,
-} from '../../application/ports/PlayGame';
-import { Weapon } from '../../domain/entities/Weapon';
+} from '../../../application/ports/input/PlayGameInputBoundary';
+import type {
+    InvalidInputOutputBoundary,
+} from '../../../application/ports/output/InvalidInputOutputBoundary';
+import { Weapon } from '../../../domain/Weapon';
 import { GameController } from '../GameController';
-import type { InvalidInputOutputBoundary } from '../GameController';
 
 class PlayGameInputBoundarySpy implements PlayGameInputBoundary {
     readonly requests: PlayGameRequest[] = [];

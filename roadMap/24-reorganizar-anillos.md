@@ -71,4 +71,4 @@ src/
 Las carpetas documentan límites, pero la regla real está en los imports. Por eso
 esta tarea prepara, pero no sustituye, la comprobación automática de la tarea 28.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

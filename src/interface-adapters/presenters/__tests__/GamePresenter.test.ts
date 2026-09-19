@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { GameResult } from '../../domain/entities/Game';
-import { Weapon } from '../../domain/entities/Weapon';
-import { GamePresenter, GameView } from '../GamePresenter';
-import { ErrorViewModel, GameViewModel } from '../GameViewModel';
+import { GameResult } from '../../../domain/GameResult';
+import { Weapon } from '../../../domain/Weapon';
+import { GamePresenter } from '../GamePresenter';
+import type { GameView } from '../GameView';
+import type {
+    ErrorViewModel,
+    GameViewModel,
+} from '../../view-models/GameViewModel';
 
 class GameViewSpy implements GameView {
     readonly results: GameViewModel[] = [];

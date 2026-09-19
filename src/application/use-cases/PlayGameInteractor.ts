@@ -1,10 +1,10 @@
-import { Game } from '../domain/entities/Game';
-import { OpponentWeaponProvider } from './ports/OpponentWeaponProvider';
-import {
+import { Game } from '../../domain/Game';
+import type {
     PlayGameInputBoundary,
-    PlayGameOutputBoundary,
     PlayGameRequest,
-} from './ports/PlayGame';
+} from '../ports/input/PlayGameInputBoundary';
+import type { OpponentWeaponProvider } from '../ports/output/OpponentWeaponProvider';
+import type { PlayGameOutputBoundary } from '../ports/output/PlayGameOutputBoundary';
 
 export class PlayGameInteractor implements PlayGameInputBoundary {
     constructor(

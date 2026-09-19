@@ -1,5 +1,5 @@
-import { Weapon } from '../../domain/entities/Weapon';
-import { OpponentWeaponProvider } from '../ports/OpponentWeaponProvider';
+import { Weapon } from '../../../domain/Weapon';
+import type { OpponentWeaponProvider } from '../../ports/output/OpponentWeaponProvider';
 
 export class FakeOpponentWeaponProvider implements OpponentWeaponProvider {
     chooseCalls = 0;

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { Weapon } from '../../domain/entities/Weapon';
+import { Weapon } from '../../../domain/Weapon';
 import { MathRandomOpponentWeaponProvider } from '../MathRandomOpponentWeaponProvider';
 
 describe('MathRandomOpponentWeaponProvider', () => {

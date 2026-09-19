@@ -2,15 +2,17 @@
 // Este es el ÚNICO archivo que conoce todas las capas.
 // Aquí se conectan las implementaciones concretas.
 
-import { Game } from './domain/entities/Game';
-import { MathRandomOpponentWeaponProvider } from './infra/MathRandomOpponentWeaponProvider';
-import { PlayGameInteractor } from './application/PlayGameInteractor';
-import { PlayGameInputBoundary } from './application/ports/PlayGame';
-import { GamePresenter } from './presentation/GamePresenter';
-import { GameController } from './controller/GameController';
-import { CliGameRunner } from './controller/CliGameRunner';
-import { ReadlineInputReader } from './controller/ReadlineInputReader';
-import { ConsoleGameView } from './controller/ConsoleGameView';
+import { Game } from './domain/Game';
+import { MathRandomOpponentWeaponProvider } from './frameworks/random/MathRandomOpponentWeaponProvider';
+import { PlayGameInteractor } from './application/use-cases/PlayGameInteractor';
+import type {
+    PlayGameInputBoundary,
+} from './application/ports/input/PlayGameInputBoundary';
+import { GamePresenter } from './interface-adapters/presenters/GamePresenter';
+import { GameController } from './interface-adapters/controllers/GameController';
+import { CliGameRunner } from './frameworks/cli/CliGameRunner';
+import { ReadlineInputReader } from './frameworks/cli/ReadlineInputReader';
+import { ConsoleGameView } from './frameworks/cli/ConsoleGameView';
 
 async function main(): Promise<void> {
     // 1. Crear dominio e implementación de infraestructura

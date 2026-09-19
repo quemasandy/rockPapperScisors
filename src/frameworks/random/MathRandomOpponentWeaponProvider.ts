@@ -1,5 +1,7 @@
-import { OpponentWeaponProvider } from '../application/ports/OpponentWeaponProvider';
-import { Weapon } from '../domain/entities/Weapon';
+import type {
+    OpponentWeaponProvider,
+} from '../../application/ports/output/OpponentWeaponProvider';
+import { Weapon } from '../../domain/Weapon';
 
 const weapons: readonly Weapon[] = [
     Weapon.Rock,

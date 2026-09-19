@@ -1,16 +1,13 @@
-import { GameResult } from '../domain/entities/Game';
-import { Weapon } from '../domain/entities/Weapon';
+import { GameResult } from '../../domain/GameResult';
+import { Weapon } from '../../domain/Weapon';
+import type {
+    InvalidInputOutputBoundary,
+} from '../../application/ports/output/InvalidInputOutputBoundary';
 import type {
     PlayGameOutputBoundary,
     PlayGameResponse,
-} from '../application/ports/PlayGame';
-import type { InvalidInputOutputBoundary } from '../controller/GameController';
-import { GameViewModel, ErrorViewModel } from './GameViewModel';
-
-export interface GameView {
-    showResult(viewModel: GameViewModel): void;
-    showError(viewModel: ErrorViewModel): void;
-}
+} from '../../application/ports/output/PlayGameOutputBoundary';
+import type { GameView } from './GameView';
 
 export class GamePresenter
     implements PlayGameOutputBoundary, InvalidInputOutputBoundary

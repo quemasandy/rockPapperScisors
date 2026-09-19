@@ -1,4 +1,4 @@
-import { Weapon } from '../../domain/entities/Weapon';
+import { Weapon } from '../../../domain/Weapon';
 
 export interface OpponentWeaponProvider {
     choose(): Weapon;

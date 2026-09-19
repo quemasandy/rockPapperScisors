@@ -1,4 +1,4 @@
-import type { GameController } from './GameController';
+import type { GameController } from '../../interface-adapters/controllers/GameController';
 
 export interface InputReader {
     read(prompt: string): Promise<string>;

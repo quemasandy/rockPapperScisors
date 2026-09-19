@@ -1,10 +1,5 @@
 import { Weapon } from './Weapon';
-
-export enum GameResult {
-    Win = "win",
-    Lose = "lose",
-    Draw = "draw",
-}
+import { GameResult } from './GameResult';
 
 const WINS_AGAINST: Readonly<Record<Weapon, Weapon>> = Object.freeze({
     [Weapon.Rock]: Weapon.Scissors,

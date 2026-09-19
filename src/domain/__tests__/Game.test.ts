@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { Game, GameResult } from '../Game';
+import { Game } from '../Game';
+import { GameResult } from '../GameResult';
 import { Weapon } from '../Weapon';
 
 describe('Game', () => {

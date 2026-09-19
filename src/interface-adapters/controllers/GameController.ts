@@ -1,9 +1,10 @@
-import type { PlayGameInputBoundary } from '../application/ports/PlayGame';
-import { Weapon } from '../domain/entities/Weapon';
-
-export interface InvalidInputOutputBoundary {
-    presentInvalidSelection(): void;
-}
+import type {
+    PlayGameInputBoundary,
+} from '../../application/ports/input/PlayGameInputBoundary';
+import type {
+    InvalidInputOutputBoundary,
+} from '../../application/ports/output/InvalidInputOutputBoundary';
+import { Weapon } from '../../domain/Weapon';
 
 const weaponBySelection: Readonly<Record<string, Weapon>> = {
     '1': Weapon.Rock,

@@ -1,12 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Game, GameResult } from '../../domain/entities/Game';
-import { Weapon } from '../../domain/entities/Weapon';
+import { Game } from '../../../domain/Game';
+import { GameResult } from '../../../domain/GameResult';
+import { Weapon } from '../../../domain/Weapon';
 import { PlayGameInteractor } from '../PlayGameInteractor';
-import {
-    PlayGameInputBoundary,
+import type { PlayGameInputBoundary } from '../../ports/input/PlayGameInputBoundary';
+import type {
     PlayGameOutputBoundary,
     PlayGameResponse,
-} from '../ports/PlayGame';
+} from '../../ports/output/PlayGameOutputBoundary';
 import { FakeOpponentWeaponProvider } from './FakeOpponentWeaponProvider';
 
 class PlayGameOutputBoundarySpy implements PlayGameOutputBoundary {
