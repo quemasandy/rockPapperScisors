@@ -64,4 +64,4 @@ tests/
 Los tests pueden conocer el sistema completo; el sistema productivo nunca debe
 conocer sus tests. Esa asimetría también es una regla de dependencias.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completada

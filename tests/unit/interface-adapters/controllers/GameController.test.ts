@@ -2,26 +2,16 @@ import { describe, expect, it } from 'vitest';
 import type {
     PlayGameInputBoundary,
     PlayGameRequest,
-} from '../../../application/ports/input/PlayGameInputBoundary';
-import type {
-    InvalidInputOutputBoundary,
-} from '../../../application/ports/output/InvalidInputOutputBoundary';
-import { Weapon } from '../../../domain/Weapon';
-import { GameController } from '../GameController';
+} from '../../../../src/application/ports/input/PlayGameInputBoundary';
+import { Weapon } from '../../../../src/domain/Weapon';
+import { GameController } from '../../../../src/interface-adapters/controllers/GameController';
+import { OutputBoundarySpy } from '../../../support/OutputBoundarySpy';
 
 class PlayGameInputBoundarySpy implements PlayGameInputBoundary {
     readonly requests: PlayGameRequest[] = [];
 
     execute(request: PlayGameRequest): void {
         this.requests.push(request);
-    }
-}
-
-class InvalidInputOutputBoundarySpy implements InvalidInputOutputBoundary {
-    presentInvalidSelectionCalls = 0;
-
-    presentInvalidSelection(): void {
-        this.presentInvalidSelectionCalls += 1;
     }
 }
 
@@ -35,7 +25,7 @@ describe('GameController', () => {
         ['tijeras', Weapon.Scissors],
     ])('adapta la selección válida %s a %s', (rawSelection, playerWeapon) => {
         const playGame = new PlayGameInputBoundarySpy();
-        const invalidInputOutput = new InvalidInputOutputBoundarySpy();
+        const invalidInputOutput = new OutputBoundarySpy();
         const controller = new GameController(playGame, invalidInputOutput);
 
         controller.handle(rawSelection);
@@ -46,7 +36,7 @@ describe('GameController', () => {
 
     it('normaliza mayúsculas y espacios alrededor de una selección válida', () => {
         const playGame = new PlayGameInputBoundarySpy();
-        const invalidInputOutput = new InvalidInputOutputBoundarySpy();
+        const invalidInputOutput = new OutputBoundarySpy();
         const controller = new GameController(playGame, invalidInputOutput);
 
         controller.handle('  PiEdRa  ');
@@ -59,7 +49,7 @@ describe('GameController', () => {
         'rechaza la selección inválida %j sin ejecutar el caso de uso',
         (rawSelection) => {
             const playGame = new PlayGameInputBoundarySpy();
-            const invalidInputOutput = new InvalidInputOutputBoundarySpy();
+            const invalidInputOutput = new OutputBoundarySpy();
             const controller = new GameController(playGame, invalidInputOutput);
 
             controller.handle(rawSelection);

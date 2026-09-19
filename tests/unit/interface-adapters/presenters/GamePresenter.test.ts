@@ -1,25 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { GameResult } from '../../../domain/GameResult';
-import { Weapon } from '../../../domain/Weapon';
-import { GamePresenter } from '../GamePresenter';
-import type { GameView } from '../GameView';
-import type {
-    ErrorViewModel,
-    GameViewModel,
-} from '../../view-models/GameViewModel';
-
-class GameViewSpy implements GameView {
-    readonly results: GameViewModel[] = [];
-    readonly errors: ErrorViewModel[] = [];
-
-    showResult(viewModel: GameViewModel): void {
-        this.results.push(viewModel);
-    }
-
-    showError(viewModel: ErrorViewModel): void {
-        this.errors.push(viewModel);
-    }
-}
+import { GameResult } from '../../../../src/domain/GameResult';
+import { Weapon } from '../../../../src/domain/Weapon';
+import { GamePresenter } from '../../../../src/interface-adapters/presenters/GamePresenter';
+import { GameViewSpy } from '../../../support/GameViewSpy';
 
 describe('GamePresenter', () => {
     it.each([

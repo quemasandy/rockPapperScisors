@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { ConsoleGameView } from '../ConsoleGameView';
+import { ConsoleGameView } from '../../../../src/frameworks/cli/ConsoleGameView';
 
 afterEach(() => {
     vi.restoreAllMocks();

@@ -1,29 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Game } from '../../../domain/Game';
-import { GameResult } from '../../../domain/GameResult';
-import { Weapon } from '../../../domain/Weapon';
-import { PlayGameInteractor } from '../PlayGameInteractor';
-import type { PlayGameInputBoundary } from '../../ports/input/PlayGameInputBoundary';
-import type {
-    PlayGameOutputBoundary,
-    PlayGameResponse,
-} from '../../ports/output/PlayGameOutputBoundary';
-import { FakeOpponentWeaponProvider } from './FakeOpponentWeaponProvider';
-
-class PlayGameOutputBoundarySpy implements PlayGameOutputBoundary {
-    readonly responses: PlayGameResponse[] = [];
-
-    present(response: PlayGameResponse): void {
-        this.responses.push(response);
-    }
-}
+import { Game } from '../../../src/domain/Game';
+import { GameResult } from '../../../src/domain/GameResult';
+import { Weapon } from '../../../src/domain/Weapon';
+import { PlayGameInteractor } from '../../../src/application/use-cases/PlayGameInteractor';
+import type { PlayGameInputBoundary } from '../../../src/application/ports/input/PlayGameInputBoundary';
+import { FakeOpponentWeaponProvider } from '../../support/FakeOpponentWeaponProvider';
+import { OutputBoundarySpy } from '../../support/OutputBoundarySpy';
 
 describe('PlayGameInteractor', () => {
     it('envía una sola respuesta con ambas armas y el resultado del dominio', () => {
         const opponentWeaponProvider = new FakeOpponentWeaponProvider(Weapon.Rock);
         const game = new Game();
         const playSpy = vi.spyOn(game, 'play');
-        const outputBoundary = new PlayGameOutputBoundarySpy();
+        const outputBoundary = new OutputBoundarySpy();
         const interactor = new PlayGameInteractor(
             game,
             opponentWeaponProvider,
@@ -47,7 +36,7 @@ describe('PlayGameInteractor', () => {
         [Weapon.Scissors, GameResult.Lose],
         [Weapon.Rock, GameResult.Draw],
     ])('presenta el resultado %s calculado por el dominio', (playerWeapon, result) => {
-        const outputBoundary = new PlayGameOutputBoundarySpy();
+        const outputBoundary = new OutputBoundarySpy();
         const interactor = new PlayGameInteractor(
             new Game(),
             new FakeOpponentWeaponProvider(Weapon.Rock),
@@ -66,7 +55,7 @@ describe('PlayGameInteractor', () => {
     });
 
     it('implementa el input boundary y no retorna un DTO', () => {
-        const outputBoundary = new PlayGameOutputBoundarySpy();
+        const outputBoundary = new OutputBoundarySpy();
         const interactor: PlayGameInputBoundary = new PlayGameInteractor(
             new Game(),
             new FakeOpponentWeaponProvider(Weapon.Rock),

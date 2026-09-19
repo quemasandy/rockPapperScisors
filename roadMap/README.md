@@ -49,8 +49,8 @@ en verde.
 | 22 | [Extraer el controller de entrada](./22-extraer-game-controller.md) | Interface Adapter, validación | ✅ |
 | 23 | [Aislar los drivers de consola](./23-aislar-drivers-cli.md) | Frameworks & Drivers | ✅ |
 | 24 | [Reorganizar las carpetas por anillos](./24-reorganizar-anillos.md) | Dependency Rule visible | ✅ |
-| 25 | [Separar tests y test doubles](./25-separar-tests-produccion.md) | Frontera producción/testing | ⬜ |
-| 26 | [Separar build y type-check](./26-configurar-build-produccion.md) | Configuración de entrega | ⬜ |
+| 25 | [Separar tests y test doubles](./25-separar-tests-produccion.md) | Frontera producción/testing | ✅ |
+| 26 | [Separar build y type-check](./26-configurar-build-produccion.md) | Configuración de entrega | ✅ |
 | 27 | [Endurecer TypeScript](./27-endurecer-typescript.md) | Seguridad estática | ⬜ |
 | 28 | [Automatizar la Dependency Rule](./28-tests-arquitectura.md) | Fitness functions arquitectónicas | ⬜ |
 | 29 | [Consolidar la documentación final](./29-documentar-arquitectura-final.md) | Decisiones y diagrama definitivo | ⬜ |
@@ -110,6 +110,27 @@ La dirección permitida de las dependencias de código será:
 frameworks ──► interface-adapters ──► application ──► domain
      main.ts puede conocer todas las capas porque es el Composition Root.
 ```
+
+## Frontera de testing
+
+Desde la tarea 25, `src` contiene únicamente código de producción. Las pruebas
+reflejan los anillos que verifican y los doubles compartidos están fuera del
+producto:
+
+```text
+tests/
+├── unit/
+│   ├── domain/
+│   ├── application/
+│   ├── interface-adapters/
+│   └── frameworks/
+├── integration/
+│   └── cli/
+└── support/
+```
+
+El smoke test del CLI conecta los adapters reales con un reader, una vista y un
+oponente en memoria; no abre procesos ni usa `stdin`.
 
 La fase no agrega interfaz web, persistencia, historial ni nuevos modos de juego.
 Su objetivo es hacer explícitos y verificables los límites del comportamiento

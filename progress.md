@@ -77,3 +77,25 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Se agregaron pruebas para las seis entradas, normalización, texto desconocido y cadena vacía.
 - Validación final: `npm test` (38/38), `npx tsc --noEmit`, `git diff --check` y smoke tests del CLI válido/inválido pasan.
 - TODO: ninguno para la tarea 22.
+
+## Tarea 25 — Separar tests y test doubles de producción
+
+- Las suites unitarias salieron de `src` y ahora reflejan los anillos bajo `tests/unit`.
+- Los doubles reutilizables viven en `tests/support`; los doubles usados por una sola suite permanecen locales.
+- Se eliminaron todas las carpetas `__tests__` del árbol productivo y ningún archivo de `src` depende de `tests`.
+- Se agregó un smoke test en `tests/integration/cli` que conecta runner, controller, interactor y presenter con adapters en memoria.
+- El smoke test ejecuta una ronda completa sin procesos externos ni acceso a `stdin`.
+- La configuración de build se conserva sin cambios para abordarla en la tarea 26.
+- El README del roadmap y la especificación marcan la tarea 25 como completada.
+- Validación final con Node 24.19.0: `npm test` (42/42), `npx tsc --noEmit`, type-check adicional de `src` y `tests`, y `git diff --check` pasan.
+- TODO: ninguno para la tarea 25.
+
+## Tarea 26 — Separar build y type-check
+
+- `tsconfig.json` valida `src` y `tests`, usa `noEmit` y ya no define directorios de entrada o salida.
+- `tsconfig.build.json` hereda las reglas compartidas, vuelve a habilitar la emisión y compila exclusivamente `src` hacia `dist`.
+- `package.json` expone `typecheck`, `build` y `verify`; el entrypoint del paquete ahora es `dist/main.js`.
+- Un error de tipos temporal dentro de `tests` fue detectado por `npm run typecheck` y se retiró inmediatamente.
+- El build genera 17 archivos JavaScript productivos, sin tests, fakes ni carpetas `tests` o `__tests__`.
+- Validación final con Node 24.19.0: `npm run verify` (42/42), inspección de `dist`, ejecución de una ronda desde `dist/main.js` y `git diff --check` pasan.
+- TODO: ninguno para la tarea 26.

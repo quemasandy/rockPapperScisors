@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Weapon } from '../Weapon';
+import { Weapon } from '../../../src/domain/Weapon';
 
 describe('Weapon', () => {
     it('usa identificadores internos neutrales', () => {

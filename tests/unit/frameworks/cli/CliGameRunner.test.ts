@@ -1,16 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { CliGameRunner, InputReader } from '../CliGameRunner';
-
-class InputReaderFake implements InputReader {
-    readonly prompts: string[] = [];
-
-    constructor(private readonly answer: string) {}
-
-    async read(prompt: string): Promise<string> {
-        this.prompts.push(prompt);
-        return this.answer;
-    }
-}
+import { CliGameRunner } from '../../../../src/frameworks/cli/CliGameRunner';
+import { InputReaderFake } from '../../../support/InputReaderFake';
 
 class GameControllerSpy {
     readonly selections: string[] = [];

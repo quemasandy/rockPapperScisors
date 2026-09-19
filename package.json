@@ -4,9 +4,12 @@
   "engines": {
     "node": "^24.0.0"
   },
-  "main": "index.js",
+  "main": "dist/main.js",
   "scripts": {
     "start": "ts-node src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "verify": "npm run typecheck && npm test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest"
   },

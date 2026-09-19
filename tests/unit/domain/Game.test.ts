@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { Game } from '../Game';
-import { GameResult } from '../GameResult';
-import { Weapon } from '../Weapon';
+import { Game } from '../../../src/domain/Game';
+import { GameResult } from '../../../src/domain/GameResult';
+import { Weapon } from '../../../src/domain/Weapon';
 
 describe('Game', () => {
     describe('Empates', () => {

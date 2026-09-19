@@ -68,4 +68,4 @@ una configuración que garantice que `dist` no incluya pruebas.
 Separar validación y entrega evita elegir entre tests tipados o builds limpios. La
 configuración también forma parte de los límites del sistema.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completada
