@@ -59,4 +59,4 @@ Un driver es un detalle de entrega. Si mañana se añade HTTP, se reemplaza el p
 de entrada y se reutilizan el caso de uso y el dominio sin enseñarles qué es una
 petición web.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
