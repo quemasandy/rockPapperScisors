@@ -1,4 +1,4 @@
-import type { GameView } from '../../interface-adapters/presenters/GameView';
+import type { GameView } from '../../interface-adapters/ports/GameView';
 import type {
     ErrorViewModel,
     GameViewModel,

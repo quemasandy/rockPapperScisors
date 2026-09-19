@@ -7,7 +7,7 @@ import type {
     PlayGameOutputBoundary,
     PlayGameResponse,
 } from '../../application/ports/output/PlayGameOutputBoundary';
-import type { GameView } from './GameView';
+import type { GameView } from '../ports/GameView';
 
 export class GamePresenter
     implements PlayGameOutputBoundary, InvalidInputOutputBoundary
