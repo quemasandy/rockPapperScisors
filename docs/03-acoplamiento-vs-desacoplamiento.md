@@ -4,7 +4,7 @@
 > **Documento histórico de la fase 1.** Los ejemplos con `Machine`, `GameUI`,
 > `RandomNumberGenerator`, `GameCli` y las carpetas antiguas muestran el punto de
 > partida pedagógico, no el diseño vigente. Consulta la
-> [arquitectura final](./04-arquitectura-final.md) para los nombres, boundaries y
+> [arquitectura final](./README.md) para los nombres, boundaries y
 > reglas actuales.
 
 ## Definición simple

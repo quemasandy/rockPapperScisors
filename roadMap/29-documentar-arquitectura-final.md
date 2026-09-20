@@ -23,7 +23,7 @@ pedagógicos válidos, pero no representan el diseño objetivo de la fase 2.
    diagrama definitivo del flujo de ejecución.
 2. Añadir un diagrama separado para la dirección de dependencias de código; no
    mezclarla con la dirección de llamadas en runtime.
-3. Crear `docs/04-arquitectura-final.md` con:
+3. Crear `docs/README.md` con:
    - responsabilidad de cada anillo;
    - ownership de input, output y gateway ports;
    - diferencia entre flujo de control y dependencia de código;
