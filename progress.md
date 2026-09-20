@@ -115,3 +115,25 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - No se introdujeron `any`, non-null assertions ni directivas para silenciar el compilador.
 - Validación final con Node 24.19.0: `npm run verify` (44/44), búsqueda de escapes y `git diff --check` pasan.
 - TODO: ninguno para la tarea 27.
+
+## Tarea 30 — Cambiar la presentación sin cambiar el juego
+
+- Solicitud: implementar completa la tarea 30 del roadmap.
+- Predicción: añadir un presenter JSON y pruebas en `interface-adapters`; mantener
+  `domain` y `application` sin cambios; conservar `GamePresenter` como composición
+  predeterminada en `main.ts`.
+- Contrato fijado por pruebas: una única línea JSON para victoria, derrota, empate
+  y entrada inválida; la integración determinista usa papel contra piedra.
+- Las pruebas fallaron primero porque `JsonGamePresenter` todavía no existía; se
+  implementó contra ambos output boundaries e inyectando solo `writeLine`.
+- Sustitución comprobada temporalmente en `main.ts`: una ronda real escribió una
+  línea JSON; después se restauró `GamePresenter` + `ConsoleGameView` como salida
+  predeterminada.
+- Contraste con la predicción: `domain`, `application` y el `main.ts` final no
+  cambiaron; el diff productivo solo añade el presenter en `interface-adapters`.
+  También se añadieron sus pruebas y se actualizó la documentación canónica.
+- Validación final con Node 24.19.0: pruebas específicas (6/6), `npm run verify`
+  (50/50, arquitectura sin violaciones y build correcto), `git diff --check` y
+  una ejecución textual de `npm start` pasan.
+- El ejercicio 30 y su índice quedaron marcados como completados.
+- TODO: ninguno para la tarea 30.

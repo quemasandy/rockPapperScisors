@@ -76,7 +76,7 @@ hacerse por separado; ninguno requiere implementar los otros dos.
 
 | # | Ejercicio | Qué aprenderás | Tiempo | Estado |
 |---|-----------|----------------|--------|--------|
-| 30 | [Cambiar la presentación sin cambiar el juego](./30-desacoplar-presentacion.md) | Separar capas y desarrollar contra un contrato | 30–45 min | ⬜ |
+| 30 | [Cambiar la presentación sin cambiar el juego](./30-desacoplar-presentacion.md) | Separar capas y desarrollar contra un contrato | 30–45 min | ✅ |
 | 31 | [Agregar un caso de uso independiente](./31-desacoplar-casos-de-uso.md) | Separar funcionalidades y compartir solo las reglas comunes | 35–50 min | ⬜ |
 | 32 | [Ejecutar el juego fuera del repositorio](./32-independencia-de-despliegue.md) | Distinguir ejecución, build y entrega independiente | 20–30 min | ⬜ |
 

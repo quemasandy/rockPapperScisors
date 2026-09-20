@@ -49,15 +49,24 @@ al resultado, no a toda la salida del programa.
 
 ## ✅ Criterios de finalización
 
-- [ ] El presenter nuevo funciona con un double y con el caso de uso real.
-- [ ] Cambiar la presentación solo exige cambiar la composición.
-- [ ] Las capas de dominio y aplicación permanecen sin cambios.
+- [x] El presenter nuevo funciona con un double y con el caso de uso real.
+- [x] Cambiar la presentación solo exige cambiar la composición.
+- [x] Las capas de dominio y aplicación permanecen sin cambios.
 
 ## 💡 Reflexión
 
 ¿Qué contrato permitió trabajar sin el interactor real? ¿Por qué un parámetro
 `format` dentro del caso de uso debilitaría esta separación?
 
+`PlayGameOutputBoundary` y su `PlayGameResponse` permitieron probar el presenter
+entregándole respuestas conocidas, sin construir el interactor. Para el error de
+entrada se usó de la misma forma `InvalidInputOutputBoundary`.
+
+Un parámetro `format` obligaría al caso de uso a conocer decisiones de entrega y
+a cambiar cada vez que aparezca una representación nueva. Al mantener esa
+decisión fuera, el interactor publica una respuesta estable y el composition root
+elige qué presenter la transforma.
+
 Al terminar, marca este archivo y el [índice](./README.md) como completados.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado

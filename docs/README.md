@@ -41,10 +41,11 @@ src/
 │   ├── controllers/
 │   │   └── GameController.ts
 │   ├── ports/
+│   │   ├── GameView.ts
 │   │   └── InvalidInputOutputBoundary.ts
 │   ├── presenters/
 │   │   ├── GamePresenter.ts
-│   │   └── GameView.ts
+│   │   └── JsonGamePresenter.ts
 │   └── view-models/
 │       └── GameViewModel.ts
 ├── frameworks/
@@ -75,8 +76,9 @@ capa es propietaria de los contratos que necesita para esa coordinación.
 
 Traduce entre protocolos externos y modelos internos. `GameController` convierte
 texto del CLI en un `PlayGameRequest`; `GamePresenter` convierte respuestas o
-errores en ViewModels ya formateados. Ninguno conoce APIs de Node.js ni
-implementaciones concretas de frameworks.
+errores en ViewModels ya formateados. `JsonGamePresenter` ofrece una presentación
+alternativa serializada e inyecta una función de escritura. Ninguno conoce APIs
+de Node.js ni implementaciones concretas de frameworks.
 
 ### Frameworks & drivers
 
@@ -101,9 +103,9 @@ exterior.
 | Contrato | Propietario | Quién lo usa | Implementación actual |
 |---|---|---|---|
 | `PlayGameInputBoundary` | Application | `GameController` inicia el caso de uso | `PlayGameInteractor` |
-| `PlayGameOutputBoundary` | Application | `PlayGameInteractor` publica la respuesta | `GamePresenter` |
+| `PlayGameOutputBoundary` | Application | `PlayGameInteractor` publica la respuesta | `GamePresenter`, `JsonGamePresenter` |
 | `OpponentWeaponProvider` | Application | `PlayGameInteractor` solicita un arma rival | `MathRandomOpponentWeaponProvider` |
-| `InvalidInputOutputBoundary` | Interface adapters | `GameController` notifica una selección inválida | `GamePresenter` |
+| `InvalidInputOutputBoundary` | Interface adapters | `GameController` notifica una selección inválida | `GamePresenter`, `JsonGamePresenter` |
 | `GameView` | Interface adapters | `GamePresenter` entrega ViewModels | `ConsoleGameView` |
 | `InputReader` | Driver CLI | `CliGameRunner` solicita texto | `ReadlineInputReader` |
 
@@ -141,6 +143,11 @@ GamePresenter ──► GameView ──► ConsoleGameView ──► Usuario
 
 En la rama inválida, `GamePresenter` también implementa
 `InvalidInputOutputBoundary` y termina en la misma `GameView`.
+
+`JsonGamePresenter` puede ocupar los dos lugares de `GamePresenter` en esta
+composición. En vez de usar `GameView`, recibe `writeLine: (line: string) => void`
+y produce una única línea JSON. El `main.ts` conserva la vista textual como opción
+predeterminada; sustituirla solo cambia el ensamblado del composition root.
 
 ## Dirección de dependencias de código
 
