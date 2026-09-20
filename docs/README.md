@@ -128,7 +128,7 @@ Usuario
   ▼
 ReadlineInputReader ──► CliGameRunner ──► GameController
                                              ├── selección inválida
-                                             │      └──► InvalidInputOutputBoundary ──► GamePresenter
+                                             │      └──► InvalidInputOutputBoundary ──► JsonGamePresenter
                                              │
                                              └── selección válida
                                                     └──► PlayGameInputBoundary
@@ -136,18 +136,19 @@ ReadlineInputReader ──► CliGameRunner ──► GameController
                                                                       ├──► OpponentWeaponProvider
                                                                       │          └──► MathRandomOpponentWeaponProvider
                                                                       ├──► Game
-                                                                      └──► PlayGameOutputBoundary ──► GamePresenter
+                                                                      └──► PlayGameOutputBoundary ──► JsonGamePresenter
 
-GamePresenter ──► GameView ──► ConsoleGameView ──► Usuario
+JsonGamePresenter ──► writeLine (`console.log`) ──► Usuario
 ```
 
-En la rama inválida, `GamePresenter` también implementa
-`InvalidInputOutputBoundary` y termina en la misma `GameView`.
+En la rama inválida, `JsonGamePresenter` también implementa
+`InvalidInputOutputBoundary` y termina en la misma función de escritura.
 
-`JsonGamePresenter` puede ocupar los dos lugares de `GamePresenter` en esta
-composición. En vez de usar `GameView`, recibe `writeLine: (line: string) => void`
-y produce una única línea JSON. El `main.ts` conserva la vista textual como opción
-predeterminada; sustituirla solo cambia el ensamblado del composition root.
+`JsonGamePresenter` ocupa los dos lugares del presenter en esta composición. En
+vez de usar `GameView`, recibe `writeLine: (line: string) => void` y produce una
+única línea JSON. `GamePresenter` y `ConsoleGameView` permanecen disponibles como
+presentación textual alternativa; sustituir una por otra solo cambia el
+ensamblado del composition root.
 
 ## Dirección de dependencias de código
 

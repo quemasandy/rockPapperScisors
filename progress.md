@@ -137,3 +137,19 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
   una ejecución textual de `npm start` pasan.
 - El ejercicio 30 y su índice quedaron marcados como completados.
 - TODO: ninguno para la tarea 30.
+
+### Seguimiento: composición JSON activa
+
+- Solicitud: usar `JsonGamePresenter` para observar cómo queda el CLI.
+- Predicción: solo debe cambiar el wiring de `main.ts`; las políticas y los demás
+  adapters deben permanecer intactos.
+- `JsonGamePresenter` quedó como presentación predeterminada, inyectando
+  `console.log` mediante una función `writeLine`.
+- Ejecución válida observada: papel contra tijeras produjo una línea con
+  `result: "lose"`; la entrada `lagarto` produjo el error JSON esperado.
+- Contraste con la predicción: el único cambio de código fue el composition root;
+  `domain`, `application` y los demás adapters no cambiaron. Se actualizó la
+  documentación canónica para reflejar el flujo activo.
+- Validación con Node 24.19.0: `npm run verify` pasa con 50/50 pruebas,
+  arquitectura sin violaciones y build correcto.
+- TODO: ninguno; conservar JSON como salida activa.

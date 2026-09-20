@@ -8,20 +8,18 @@ import { PlayGameInteractor } from './application/use-cases/PlayGameInteractor';
 import type {
     PlayGameInputBoundary,
 } from './application/ports/input/PlayGameInputBoundary';
-import { GamePresenter } from './interface-adapters/presenters/GamePresenter';
+import { JsonGamePresenter } from './interface-adapters/presenters/JsonGamePresenter';
 import { GameController } from './interface-adapters/controllers/GameController';
 import { CliGameRunner } from './frameworks/cli/CliGameRunner';
 import { ReadlineInputReader } from './frameworks/cli/ReadlineInputReader';
-import { ConsoleGameView } from './frameworks/cli/ConsoleGameView';
 
 async function main(): Promise<void> {
     // 1. Crear dominio e implementación de infraestructura
     const game = new Game();
     const opponentWeaponProvider = new MathRandomOpponentWeaponProvider();
 
-    // 2. Conectar la salida: presenter -> view
-    const view = new ConsoleGameView();
-    const presenter = new GamePresenter(view);
+    // 2. Conectar la presentación JSON con la escritura a consola
+    const presenter = new JsonGamePresenter((line) => console.log(line));
 
     // 3. Crear el interactor, inyectando dominio, infraestructura y output boundary
     const playGameInput: PlayGameInputBoundary = new PlayGameInteractor(
