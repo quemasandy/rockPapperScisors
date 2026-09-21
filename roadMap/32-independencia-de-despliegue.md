@@ -39,10 +39,10 @@ sustituir código; la entrega independiente requiere otra evidencia.
 
    | Pregunta | Evidencia o decisión |
    |----------|----------------------|
-   | ¿Qué necesitas para ejecutar el juego fuera del repositorio? | Lo observado en la carpeta temporal |
-   | Si cambias solo un presenter, ¿qué vuelves a construir y copiar? | Revisa cómo funciona el build actual |
-   | ¿Qué faltaría para reemplazar el oponente sin reconstruir la aplicación? | Un artefacto separado y un contrato compatible |
-   | ¿Qué necesidad concreta justificaría moverlo a otro proceso? | Propón un requisito y un coste que introduciría |
+   | ¿Qué necesitas para ejecutar el juego fuera del repositorio? | La carpeta `dist` completa y una versión compatible de Node. La prueba usó Node 24.19.0; no necesitó `src`, tests, `node_modules`, TypeScript, `ts-node` ni Vitest. |
+   | Si cambias solo un presenter, ¿qué vuelves a construir y copiar? | El build y la entrega actuales tienen una sola unidad: hay que recompilar el producto y copiar de nuevo `dist`, aunque el cambio esté aislado en el código del presenter. |
+   | ¿Qué faltaría para reemplazar el oponente sin reconstruir la aplicación? | Convertirlo en un artefacto desplegable por separado, mantener un contrato compatible y resolver su implementación en runtime mediante configuración o comunicación entre procesos. |
+   | ¿Qué necesidad concreta justificaría moverlo a otro proceso? | Por ejemplo, consumir un oponente remoto que otro equipo despliega y escala de forma independiente. A cambio aparecerían serialización, latencia, timeouts, fallos de red, observabilidad y operación adicional. Sin ese requisito, una sola aplicación es la opción más simple. |
 
 ## 🧪 Cómo comprobarlo
 
@@ -52,15 +52,26 @@ sustituir código; la entrega independiente requiere otra evidencia.
 
 ## ✅ Criterios de finalización
 
-- [ ] Puedes ejecutar el juego compilado con el directorio de trabajo fuera del repositorio.
-- [ ] Distingues separación de código, entrega de componentes y separación de procesos.
-- [ ] Puedes justificar mantener una sola aplicación mientras no exista una necesidad mayor.
+- [x] Puedes ejecutar el juego compilado con el directorio de trabajo fuera del repositorio.
+- [x] Distingues separación de código, entrega de componentes y separación de procesos.
+- [x] Puedes justificar mantener una sola aplicación mientras no exista una necesidad mayor.
 
 ## 💡 Reflexión
 
 ¿Qué demostró ejecutar el build aislado y qué no? Si el oponente fuera un servicio,
 ¿cómo cambiarían la espera de su respuesta y el manejo de fallos?
 
+La prueba demostró que el JavaScript emitido es una entrega autocontenida respecto
+al repositorio: sus imports relativos se resuelven dentro de `dist` y el único
+import externo en runtime es `node:readline/promises`, incluido en Node. No
+demostró que sus componentes puedan desplegarse de forma independiente: `main.js`
+los enlaza estáticamente y todos viajan en el mismo directorio.
+
+Un oponente remoto convertiría la obtención inmediata actual en una operación
+asíncrona con latencia y fallos parciales. Habría que decidir timeouts, reintentos,
+cancelación y cómo presentar indisponibilidad sin confundirla con una regla del
+juego. Ese coste no está justificado por los requisitos actuales.
+
 Al terminar, marca este archivo y el [índice](./README.md) como completados.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
