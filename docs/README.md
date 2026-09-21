@@ -7,13 +7,18 @@ prevalecen el código, las reglas de `dependency-cruiser` y esta descripción.
 
 ## Alcance
 
-La aplicación ejecuta **una ronda** de Piedra-Papel-Tijera mediante CLI:
+La interfaz CLI ejecuta **una ronda** de Piedra-Papel-Tijera:
 
 1. lee una selección;
 2. la traduce a un concepto del dominio;
 3. elige el arma del oponente;
 4. evalúa la ronda;
 5. presenta un resultado o un error de entrada.
+
+Application ofrece además un caso de uso independiente para **analizar un arma**:
+la compara con cada valor de `Weapon` y clasifica contra cuáles gana, pierde o
+empata. Este recorrido tiene contratos propios y, por el alcance actual, solo se
+ejecuta desde tests; no está conectado a la CLI ni tiene presenter productivo.
 
 No hay persistencia, historial, servidor web, API remota ni modos adicionales. No
 se crean repositories, servicios web o interfaces “por si acaso”: un boundary solo
@@ -31,11 +36,14 @@ src/
 ├── application/
 │   ├── ports/
 │   │   ├── input/
+│   │   │   ├── AnalyzeWeaponInputBoundary.ts
 │   │   │   └── PlayGameInputBoundary.ts
 │   │   └── output/
+│   │       ├── AnalyzeWeaponOutputBoundary.ts
 │   │       ├── OpponentWeaponProvider.ts
 │   │       └── PlayGameOutputBoundary.ts
 │   └── use-cases/
+│       ├── AnalyzeWeaponInteractor.ts
 │       └── PlayGameInteractor.ts
 ├── interface-adapters/
 │   ├── controllers/
@@ -68,9 +76,11 @@ aleatoriedad, traducciones, ports, consola ni casos de uso.
 
 ### Application
 
-Define y ejecuta el caso de uso. `PlayGameInteractor` coordina el dominio, solicita
-un arma rival mediante un gateway y entrega la respuesta a un output boundary. La
-capa es propietaria de los contratos que necesita para esa coordinación.
+Define y ejecuta los casos de uso. `PlayGameInteractor` coordina una ronda,
+solicita un arma rival mediante un gateway y entrega la respuesta a su output
+boundary. `AnalyzeWeaponInteractor` evalúa el arma recibida contra todas las
+armas usando `Game` y entrega una clasificación a otro output boundary. La capa
+es propietaria de los contratos específicos que necesita cada coordinación.
 
 ### Interface adapters
 
@@ -103,6 +113,8 @@ exterior.
 
 | Contrato | Propietario | Quién lo usa | Implementación actual |
 |---|---|---|---|
+| `AnalyzeWeaponInputBoundary` | Application | Un caller puede iniciar el análisis; hoy lo ejercen los tests | `AnalyzeWeaponInteractor` |
+| `AnalyzeWeaponOutputBoundary` | Application | `AnalyzeWeaponInteractor` publica la clasificación | Spy de prueba; sin adapter productivo por ahora |
 | `PlayGameInputBoundary` | Application | `GameController` inicia el caso de uso | `PlayGameInteractor` |
 | `PlayGameOutputBoundary` | Application | `PlayGameInteractor` publica la respuesta | `GamePresenter`, `JsonGamePresenter` |
 | `OpponentWeaponProvider` | Application | `PlayGameInteractor` solicita un arma rival | `MathRandomOpponentWeaponProvider` |
@@ -144,6 +156,15 @@ JsonGamePresenter ──► GameView ──► ConsoleGameView ──► Usuario
 
 En la rama inválida, `JsonGamePresenter` también implementa
 `InvalidInputOutputBoundary` y termina en la misma `GameView`.
+
+El análisis no participa en ese flujo de la CLI. Su flujo de control, ejecutado
+en memoria por ahora, es independiente:
+
+```text
+Caller ──► AnalyzeWeaponInputBoundary ──► AnalyzeWeaponInteractor
+                                                ├──► Game (una vez por arma rival)
+                                                └──► AnalyzeWeaponOutputBoundary
+```
 
 `JsonGamePresenter` ocupa los dos lugares del presenter en esta composición.
 Entrega a `GameView.showResult` un ViewModel cuyo `fullOutput` es una única línea
@@ -204,6 +225,7 @@ sin que el código de la política interna importe el mecanismo exterior.
 | Cambiar `readline` por otro mecanismo de entrada | Driver, controller correspondiente y `main.ts` | No |
 | Usar otra estrategia para elegir al oponente | Implementación de `OpponentWeaponProvider` y `main.ts` | No |
 | Probar una ronda con datos deterministas | Doubles bajo `tests` | No |
+| Agregar el análisis de un arma | Contratos e interactor propios en `application` y sus tests | No; reutiliza `Game` |
 
 Cambiar las reglas de qué arma vence a cuál sí debe modificar el dominio: esa es
 su responsabilidad, no una fuga arquitectónica.

@@ -59,9 +59,9 @@ El test de análisis no necesita un provider aleatorio. Termina con
 
 ## ✅ Criterios de finalización
 
-- [ ] El análisis tiene contratos propios y no importa el interactor ni los DTOs de jugar.
-- [ ] Ambos recorridos usan la misma regla de dominio.
-- [ ] Agregar el análisis no modifica el comportamiento ni los tests de jugar.
+- [x] El análisis tiene contratos propios y no importa el interactor ni los DTOs de jugar.
+- [x] Ambos recorridos usan la misma regla de dominio.
+- [x] Agregar el análisis no modifica el comportamiento ni los tests de jugar.
 
 ## 💡 Reflexión
 
@@ -69,6 +69,17 @@ El test de análisis no necesita un provider aleatorio. Termina con
 ¿Las reglas actuales de arquitectura detectarían un import entre dos
 interactores del mismo anillo? Compruébalo leyendo su configuración.
 
+`Game` contiene la política común y estable que decide el resultado de dos
+armas; ambos casos de uso necesitan esa misma verdad del negocio. En cambio,
+`PlayGameResponse` describe exclusivamente una ronda, mientras que el análisis
+necesita tres colecciones. Reutilizar ese DTO acoplaría dos protocolos que
+cambian por razones diferentes.
+
+Las reglas actuales de `dependency-cruiser` no detectarían un import entre dos
+interactores: ambos pertenecen a `application` y las fitness functions solo
+impiden dependencias hacia anillos exteriores y ciclos. En este ejercicio, la
+independencia también queda protegida por el diseño y por revisar los imports.
+
 Al terminar, marca este archivo y el [índice](./README.md) como completados.
 
-## Estado: ⬜ Pendiente
+## Estado: ✅ Completado
