@@ -67,6 +67,15 @@ a cambiar cada vez que aparezca una representación nueva. Al mantener esa
 decisión fuera, el interactor publica una respuesta estable y el composition root
 elige qué presenter la transforma.
 
+### Refinamiento posterior
+
+El alcance inicial usó una función `writeLine` como boundary mínimo. La
+implementación vigente reutiliza `GameView`: `JsonGamePresenter` coloca el JSON
+serializado en `fullOutput` y `ConsoleGameView` lo escribe igual que la salida
+textual. Así el composition root no adapta directamente `console.log` y no se
+añade otro contrato; el coste es que el ViewModel conserva campos útiles para la
+presentación textual pero secundarios para la salida JSON.
+
 Al terminar, marca este archivo y el [índice](./README.md) como completados.
 
 ## Estado: ✅ Completado

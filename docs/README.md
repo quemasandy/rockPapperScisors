@@ -77,14 +77,15 @@ capa es propietaria de los contratos que necesita para esa coordinación.
 Traduce entre protocolos externos y modelos internos. `GameController` convierte
 texto del CLI en un `PlayGameRequest`; `GamePresenter` convierte respuestas o
 errores en ViewModels ya formateados. `JsonGamePresenter` ofrece una presentación
-alternativa serializada e inyecta una función de escritura. Ninguno conoce APIs
-de Node.js ni implementaciones concretas de frameworks.
+alternativa serializada mediante el mismo `GameView`. Ninguno conoce APIs de
+Node.js ni implementaciones concretas de frameworks.
 
 ### Frameworks & drivers
 
 Encierra los detalles reemplazables: `readline`, `console.log`, el ciclo de una
 ronda del CLI y `Math.random`. Sus implementaciones dependen de contratos o
-modelos definidos en anillos internos.
+modelos definidos en anillos internos. `ConsoleGameView` recibe de ambos
+presenters una salida ya formateada y la escribe sin conocer cómo fue construida.
 
 ### Composition root
 
@@ -106,7 +107,7 @@ exterior.
 | `PlayGameOutputBoundary` | Application | `PlayGameInteractor` publica la respuesta | `GamePresenter`, `JsonGamePresenter` |
 | `OpponentWeaponProvider` | Application | `PlayGameInteractor` solicita un arma rival | `MathRandomOpponentWeaponProvider` |
 | `InvalidInputOutputBoundary` | Interface adapters | `GameController` notifica una selección inválida | `GamePresenter`, `JsonGamePresenter` |
-| `GameView` | Interface adapters | `GamePresenter` entrega ViewModels | `ConsoleGameView` |
+| `GameView` | Interface adapters | Ambos presenters entregan ViewModels | `ConsoleGameView` |
 | `InputReader` | Driver CLI | `CliGameRunner` solicita texto | `ReadlineInputReader` |
 
 Los tres primeros viven en application: entrada, salida y gateway. El boundary
@@ -138,17 +139,17 @@ ReadlineInputReader ──► CliGameRunner ──► GameController
                                                                       ├──► Game
                                                                       └──► PlayGameOutputBoundary ──► JsonGamePresenter
 
-JsonGamePresenter ──► writeLine (`console.log`) ──► Usuario
+JsonGamePresenter ──► GameView ──► ConsoleGameView ──► Usuario
 ```
 
 En la rama inválida, `JsonGamePresenter` también implementa
-`InvalidInputOutputBoundary` y termina en la misma función de escritura.
+`InvalidInputOutputBoundary` y termina en la misma `GameView`.
 
-`JsonGamePresenter` ocupa los dos lugares del presenter en esta composición. En
-vez de usar `GameView`, recibe `writeLine: (line: string) => void` y produce una
-única línea JSON. `GamePresenter` y `ConsoleGameView` permanecen disponibles como
-presentación textual alternativa; sustituir una por otra solo cambia el
-ensamblado del composition root.
+`JsonGamePresenter` ocupa los dos lugares del presenter en esta composición.
+Entrega a `GameView.showResult` un ViewModel cuyo `fullOutput` es una única línea
+JSON ya serializada; para errores usa `GameView.showError`. `GamePresenter`
+permanece disponible como presentación textual alternativa y sustituir un
+presenter por otro solo cambia el ensamblado del composition root.
 
 ## Dirección de dependencias de código
 
@@ -184,10 +185,10 @@ con `npm run test:architecture`, definido en la tarea 28.
 
 ## Por qué ambos diagramas apuntan de forma distinta
 
-En runtime, `PlayGameInteractor` llama a un objeto que resulta ser
-`GamePresenter`. Sin embargo, su código no importa esa clase: solo conoce
-`PlayGameOutputBoundary`, contrato propiedad de application. `main.ts` inyecta la
-implementación externa.
+En runtime, `PlayGameInteractor` llama a un objeto que en la composición actual
+resulta ser `JsonGamePresenter`. Sin embargo, su código no importa esa clase:
+solo conoce `PlayGameOutputBoundary`, contrato propiedad de application. `main.ts`
+inyecta la implementación externa.
 
 Lo mismo ocurre con `OpponentWeaponProvider`: el interactor inicia la llamada
 hacia el adapter aleatorio, pero depende únicamente del gateway interno. La

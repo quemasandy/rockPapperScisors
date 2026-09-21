@@ -4,7 +4,7 @@ import type {
     GameViewModel,
 } from '../../interface-adapters/view-models/GameViewModel';
 
-// La View es el objeto humilde: solo vuelca ViewModels ya formateados.
+// La View es el objeto humilde: solo vuelca salidas ya formateadas.
 export class ConsoleGameView implements GameView {
     showResult(viewModel: GameViewModel): void {
         console.log(viewModel.fullOutput);

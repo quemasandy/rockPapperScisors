@@ -153,3 +153,58 @@ Original prompt: implementa 16 — Corregir la selección aleatoria. Test de reg
 - Validación con Node 24.19.0: `npm run verify` pasa con 50/50 pruebas,
   arquitectura sin violaciones y build correcto.
 - TODO: ninguno; conservar JSON como salida activa.
+
+### Refinamiento: salida JSON mediante una View
+
+- Solicitud: retirar la lambda `(line) => console.log(line)` del composition root
+  y usar una View para encapsular el detalle de framework.
+- Predicción: añadir un contrato de vista JSON, hacer que `JsonGamePresenter`
+  dependa de él y reutilizar `ConsoleGameView`; sin cambios en `domain` o
+  `application`.
+- Las pruebas se actualizaron primero y fallaron porque faltaban `showJson` y la
+  colaboración con la View.
+- `JsonGameView` mantiene separado el contrato del presenter JSON; la clase
+  concreta `ConsoleGameView` implementa tanto este contrato como `GameView`.
+- Las ejecuciones reales válida e inválida escriben el JSON esperado a través de
+  `ConsoleGameView`.
+- Contraste con la predicción: solo cambiaron el nuevo port, el presenter, la
+  View concreta, el composition root y sus pruebas/documentación; `domain` y
+  `application` permanecen intactos.
+- Validación con Node 24.19.0: pruebas afectadas (9/9), `npm run verify` (51/51),
+  arquitectura sin violaciones, build correcto y `git diff --check`.
+- TODO: ninguno.
+
+### Refinamiento: reutilizar `GameView.showResult`
+
+- Solicitud: evitar el contrato JSON adicional y entregar el JSON mediante
+  `GameView.showResult`, colocándolo en `fullOutput`.
+- `JsonGamePresenter` usa ahora `GameView`; completa los campos del ViewModel con
+  los valores neutrales de la respuesta y deja el emoji vacío. Los errores pasan
+  por `GameView.showError`.
+- Se eliminaron `JsonGameView`, `showJson` y `JsonGameViewSpy`; las pruebas
+  reutilizan `GameViewSpy`.
+- Las ejecuciones reales válida e inválida conservan exactamente la salida JSON.
+- Contraste con la predicción: el código final reutiliza `GameView` y
+  `ConsoleGameView`; no hay un port ni un double exclusivos para JSON. `domain` y
+  `application` permanecen intactos.
+- Validación con Node 24.19.0: pruebas afectadas (8/8), `npm run verify` (50/50),
+  arquitectura sin violaciones, build correcto y `git diff --check`.
+- TODO: ninguno.
+
+### Refinamiento: traducciones coherentes en el ViewModel JSON
+
+- Solicitud: usar en `JsonGamePresenter` las mismas traducciones de armas,
+  emojis y mensajes que en `GamePresenter`.
+- Predicción: cambiar solo el presenter JSON y sus pruebas; mantener intactas las
+  capas `domain` y `application`, la View y el presenter textual.
+- Las pruebas fijan las tres traducciones de armas y los tres resultados antes
+  de modificar el presenter.
+- `JsonGamePresenter` usa ahora los mismos mapas que `GamePresenter`: armas en
+  español y emojis/mensajes para victoria, derrota y empate. `fullOutput` conserva
+  el JSON con identificadores neutrales.
+- Contraste con la predicción: solo cambiaron el presenter JSON, su prueba y este
+  registro; `domain`, `application`, la View y `GamePresenter` permanecen iguales.
+- Validación con Node 24.19.0: pruebas afectadas (6/6), `npm run verify` (50/50),
+  arquitectura sin violaciones, build correcto, ejecución real del CLI y
+  `git diff --check`.
+- TODO: ninguno.

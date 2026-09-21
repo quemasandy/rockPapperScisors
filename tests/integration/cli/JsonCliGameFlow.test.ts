@@ -6,37 +6,43 @@ import { CliGameRunner } from '../../../src/frameworks/cli/CliGameRunner';
 import { GameController } from '../../../src/interface-adapters/controllers/GameController';
 import { JsonGamePresenter } from '../../../src/interface-adapters/presenters/JsonGamePresenter';
 import { FakeOpponentWeaponProvider } from '../../support/FakeOpponentWeaponProvider';
+import { GameViewSpy } from '../../support/GameViewSpy';
 import { InputReaderFake } from '../../support/InputReaderFake';
 
 describe('Flujo CLI con JsonGamePresenter', () => {
     it('presenta papel contra piedra como una victoria JSON', async () => {
-        const { lines, opponentWeaponProvider, runner } = createJsonCli('papel');
+        const { view, opponentWeaponProvider, runner } = createJsonCli('papel');
 
         await runner.start();
 
         expect(opponentWeaponProvider.chooseCalls).toBe(1);
-        expect(lines).toEqual([
+        expect(view.results).toHaveLength(1);
+        expect(view.results[0]?.fullOutput).toBe(
             '{"playerWeapon":"paper","opponentWeapon":"rock","result":"win"}',
-        ]);
+        );
+        expect(view.errors).toHaveLength(0);
     });
 
     it('presenta el error JSON sin ejecutar el interactor', async () => {
-        const { lines, opponentWeaponProvider, runner } = createJsonCli('lagarto');
+        const { view, opponentWeaponProvider, runner } = createJsonCli('lagarto');
 
         await runner.start();
 
         expect(opponentWeaponProvider.chooseCalls).toBe(0);
-        expect(lines).toEqual(['{"error":"invalid_selection"}']);
+        expect(view.errors).toEqual([{
+            errorMessage: '{"error":"invalid_selection"}',
+        }]);
+        expect(view.results).toHaveLength(0);
     });
 });
 
 function createJsonCli(selection: string): {
-    lines: string[];
+    view: GameViewSpy;
     opponentWeaponProvider: FakeOpponentWeaponProvider;
     runner: CliGameRunner;
 } {
-    const lines: string[] = [];
-    const presenter = new JsonGamePresenter((line) => lines.push(line));
+    const view = new GameViewSpy();
+    const presenter = new JsonGamePresenter(view);
     const opponentWeaponProvider = new FakeOpponentWeaponProvider(Weapon.Rock);
     const interactor = new PlayGameInteractor(
         new Game(),
@@ -49,5 +55,5 @@ function createJsonCli(selection: string): {
         controller,
     );
 
-    return { lines, opponentWeaponProvider, runner };
+    return { view, opponentWeaponProvider, runner };
 }
