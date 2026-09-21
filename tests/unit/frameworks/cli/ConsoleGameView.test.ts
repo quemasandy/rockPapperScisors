@@ -34,4 +34,14 @@ describe('ConsoleGameView', () => {
         expect(log).toHaveBeenCalledOnce();
         expect(log).toHaveBeenCalledWith('❌ selección inválida');
     });
+
+    it('escribe el análisis ya formateado', () => {
+        const log = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+        const view = new ConsoleGameView();
+
+        view.showAnalysis({ fullOutput: '{"weapon":"rock"}' });
+
+        expect(log).toHaveBeenCalledOnce();
+        expect(log).toHaveBeenCalledWith('{"weapon":"rock"}');
+    });
 });

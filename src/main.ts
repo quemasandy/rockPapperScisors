@@ -5,6 +5,7 @@
 import { Game } from './domain/Game';
 import { MathRandomOpponentWeaponProvider } from './frameworks/random/MathRandomOpponentWeaponProvider';
 import { PlayGameInteractor } from './application/use-cases/PlayGameInteractor';
+import { AnalyzeWeaponInteractor } from './application/use-cases/AnalyzeWeaponInteractor';
 import type {
     PlayGameInputBoundary,
 } from './application/ports/input/PlayGameInputBoundary';
@@ -13,6 +14,9 @@ import { GameController } from './interface-adapters/controllers/GameController'
 import { CliGameRunner } from './frameworks/cli/CliGameRunner';
 import { ReadlineInputReader } from './frameworks/cli/ReadlineInputReader';
 import { ConsoleGameView } from './frameworks/cli/ConsoleGameView';
+import { AnalyzeWeaponPresenter } from './interface-adapters/presenters/AnalyzeWeaponPresenter';
+import { AnalyzeWeaponController } from './interface-adapters/controllers/AnalyzeWeaponController';
+import { CliCommandRouter } from './frameworks/cli/CliCommandRouter';
 
 async function main(): Promise<void> {
     // 1. Crear dominio e implementación de infraestructura
@@ -35,11 +39,23 @@ async function main(): Promise<void> {
     const inputReader = new ReadlineInputReader();
     const gameRunner = new CliGameRunner(inputReader, controller);
 
-    // 5. Arrancar una ronda de la aplicación
-    await gameRunner.start();
+    // 5. Conectar el flujo independiente de análisis
+    const analyzePresenter = new AnalyzeWeaponPresenter(view);
+    const analyzeWeaponInput = new AnalyzeWeaponInteractor(
+        game,
+        analyzePresenter,
+    );
+    const analyzeController = new AnalyzeWeaponController(
+        analyzeWeaponInput,
+        analyzePresenter,
+    );
+
+    // 6. Elegir el caso de uso solicitado por la línea de comandos
+    const commandRouter = new CliCommandRouter(gameRunner, analyzeController);
+    await commandRouter.run(process.argv.slice(2));
 }
 
 void main().catch((error: unknown) => {
-    console.error(error);
+    console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
 });

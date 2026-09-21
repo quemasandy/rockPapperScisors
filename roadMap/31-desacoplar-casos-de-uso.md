@@ -82,4 +82,19 @@ independencia también queda protegida por el diseño y por revisar los imports.
 
 Al terminar, marca este archivo y el [índice](./README.md) como completados.
 
+### Extensión posterior: exposición mediante comandos CLI
+
+Después de completar el alcance original, ambos casos de uso se conectaron a un
+router de comandos:
+
+```bash
+npm start -- play
+npm start -- analyze piedra
+```
+
+`play` conserva la lectura interactiva del arma. `analyze` recibe el arma en el
+segundo argumento y recorre un controller y un presenter propios. La traducción
+de selecciones se comparte entre los controllers porque pertenece al mismo
+protocolo CLI; los DTOs y la coordinación de los casos de uso siguen separados.
+
 ## Estado: ✅ Completado

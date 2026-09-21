@@ -7,7 +7,14 @@ prevalecen el código, las reglas de `dependency-cruiser` y esta descripción.
 
 ## Alcance
 
-La interfaz CLI ejecuta **una ronda** de Piedra-Papel-Tijera:
+La interfaz CLI expone dos comandos independientes:
+
+```bash
+npm start -- play
+npm start -- analyze piedra
+```
+
+`play` ejecuta **una ronda** de Piedra-Papel-Tijera:
 
 1. lee una selección;
 2. la traduce a un concepto del dominio;
@@ -15,10 +22,9 @@ La interfaz CLI ejecuta **una ronda** de Piedra-Papel-Tijera:
 4. evalúa la ronda;
 5. presenta un resultado o un error de entrada.
 
-Application ofrece además un caso de uso independiente para **analizar un arma**:
+`analyze <arma>` ejecuta el caso de uso independiente para **analizar un arma**:
 la compara con cada valor de `Weapon` y clasifica contra cuáles gana, pierde o
-empata. Este recorrido tiene contratos propios y, por el alcance actual, solo se
-ejecuta desde tests; no está conectado a la CLI ni tiene presenter productivo.
+empata. Acepta `piedra`, `papel` o `tijeras` y entrega la clasificación en JSON.
 
 No hay persistencia, historial, servidor web, API remota ni modos adicionales. No
 se crean repositories, servicios web o interfaces “por si acaso”: un boundary solo
@@ -47,17 +53,23 @@ src/
 │       └── PlayGameInteractor.ts
 ├── interface-adapters/
 │   ├── controllers/
-│   │   └── GameController.ts
+│   │   ├── AnalyzeWeaponController.ts
+│   │   ├── GameController.ts
+│   │   └── parseWeaponSelection.ts
 │   ├── ports/
+│   │   ├── AnalyzeWeaponView.ts
 │   │   ├── GameView.ts
 │   │   └── InvalidInputOutputBoundary.ts
 │   ├── presenters/
+│   │   ├── AnalyzeWeaponPresenter.ts
 │   │   ├── GamePresenter.ts
 │   │   └── JsonGamePresenter.ts
 │   └── view-models/
+│       ├── AnalyzeWeaponViewModel.ts
 │       └── GameViewModel.ts
 ├── frameworks/
 │   ├── cli/
+│   │   ├── CliCommandRouter.ts
 │   │   ├── CliGameRunner.ts
 │   │   ├── ConsoleGameView.ts
 │   │   └── ReadlineInputReader.ts
@@ -84,18 +96,21 @@ es propietaria de los contratos específicos que necesita cada coordinación.
 
 ### Interface adapters
 
-Traduce entre protocolos externos y modelos internos. `GameController` convierte
-texto del CLI en un `PlayGameRequest`; `GamePresenter` convierte respuestas o
-errores en ViewModels ya formateados. `JsonGamePresenter` ofrece una presentación
-alternativa serializada mediante el mismo `GameView`. Ninguno conoce APIs de
-Node.js ni implementaciones concretas de frameworks.
+Traduce entre protocolos externos y modelos internos. `GameController` y
+`AnalyzeWeaponController` convierten selecciones del CLI en los requests de sus
+respectivos casos de uso; comparten `parseWeaponSelection` porque ambos hablan el
+mismo protocolo externo. `GamePresenter`, `JsonGamePresenter` y
+`AnalyzeWeaponPresenter` convierten respuestas o errores en ViewModels ya
+formateados. Ninguno conoce APIs de Node.js ni implementaciones concretas de
+frameworks.
 
 ### Frameworks & drivers
 
-Encierra los detalles reemplazables: `readline`, `console.log`, el ciclo de una
-ronda del CLI y `Math.random`. Sus implementaciones dependen de contratos o
-modelos definidos en anillos internos. `ConsoleGameView` recibe de ambos
-presenters una salida ya formateada y la escribe sin conocer cómo fue construida.
+Encierra los detalles reemplazables: los argumentos del proceso, `readline`,
+`console.log`, el ciclo de una ronda del CLI y `Math.random`. `CliCommandRouter`
+selecciona el flujo `play` o `analyze` sin conocer los interactors concretos.
+`ConsoleGameView` recibe de los presenters una salida ya formateada y la escribe
+sin conocer cómo fue construida.
 
 ### Composition root
 
@@ -113,16 +128,17 @@ exterior.
 
 | Contrato | Propietario | Quién lo usa | Implementación actual |
 |---|---|---|---|
-| `AnalyzeWeaponInputBoundary` | Application | Un caller puede iniciar el análisis; hoy lo ejercen los tests | `AnalyzeWeaponInteractor` |
-| `AnalyzeWeaponOutputBoundary` | Application | `AnalyzeWeaponInteractor` publica la clasificación | Spy de prueba; sin adapter productivo por ahora |
+| `AnalyzeWeaponInputBoundary` | Application | `AnalyzeWeaponController` inicia el análisis | `AnalyzeWeaponInteractor` |
+| `AnalyzeWeaponOutputBoundary` | Application | `AnalyzeWeaponInteractor` publica la clasificación | `AnalyzeWeaponPresenter` |
 | `PlayGameInputBoundary` | Application | `GameController` inicia el caso de uso | `PlayGameInteractor` |
 | `PlayGameOutputBoundary` | Application | `PlayGameInteractor` publica la respuesta | `GamePresenter`, `JsonGamePresenter` |
 | `OpponentWeaponProvider` | Application | `PlayGameInteractor` solicita un arma rival | `MathRandomOpponentWeaponProvider` |
-| `InvalidInputOutputBoundary` | Interface adapters | `GameController` notifica una selección inválida | `GamePresenter`, `JsonGamePresenter` |
-| `GameView` | Interface adapters | Ambos presenters entregan ViewModels | `ConsoleGameView` |
+| `InvalidInputOutputBoundary` | Interface adapters | Ambos controllers notifican una selección inválida | `GamePresenter`, `JsonGamePresenter`, `AnalyzeWeaponPresenter` |
+| `AnalyzeWeaponView` | Interface adapters | `AnalyzeWeaponPresenter` entrega un ViewModel | `ConsoleGameView` |
+| `GameView` | Interface adapters | `GamePresenter` y `JsonGamePresenter` entregan ViewModels | `ConsoleGameView` |
 | `InputReader` | Driver CLI | `CliGameRunner` solicita texto | `ReadlineInputReader` |
 
-Los tres primeros viven en application: entrada, salida y gateway. El boundary
+Los cinco primeros viven en application: entradas, salidas y gateway. El boundary
 de entrada inválida pertenece a interface adapters porque el rechazo se detecta
 al traducir texto del CLI, antes de ejecutar el caso de uso; permite que el
 controller notifique el rechazo sin conocer el presenter concreto. Este contrato,
@@ -132,39 +148,32 @@ de lo necesario.
 
 ## Flujo de control en runtime
 
-Las flechas de este diagrama significan **llamadas realizadas durante una ronda**,
-no imports:
+Las flechas de este diagrama significan **llamadas realizadas en runtime**, no
+imports:
 
 ```text
-Usuario
-  │
-  ▼
-ReadlineInputReader ──► CliGameRunner ──► GameController
-                                             ├── selección inválida
-                                             │      └──► InvalidInputOutputBoundary ──► JsonGamePresenter
-                                             │
-                                             └── selección válida
-                                                    └──► PlayGameInputBoundary
-                                                               └──► PlayGameInteractor
-                                                                      ├──► OpponentWeaponProvider
-                                                                      │          └──► MathRandomOpponentWeaponProvider
-                                                                      ├──► Game
-                                                                      └──► PlayGameOutputBoundary ──► JsonGamePresenter
+process.argv ──► CliCommandRouter
+                    │
+                    ├── play ──► CliGameRunner ──► GameController
+                    │                                  └──► PlayGameInteractor
+                    │                                         ├──► OpponentWeaponProvider
+                    │                                         ├──► Game
+                    │                                         └──► JsonGamePresenter
+                    │                                                    └──► GameView
+                    │
+                    └── analyze <arma> ──► AnalyzeWeaponController
+                                                   └──► AnalyzeWeaponInteractor
+                                                          ├──► Game
+                                                          └──► AnalyzeWeaponPresenter
+                                                                     └──► AnalyzeWeaponView
 
-JsonGamePresenter ──► GameView ──► ConsoleGameView ──► Usuario
+GameView / AnalyzeWeaponView ──► ConsoleGameView ──► Usuario
 ```
 
-En la rama inválida, `JsonGamePresenter` también implementa
-`InvalidInputOutputBoundary` y termina en la misma `GameView`.
-
-El análisis no participa en ese flujo de la CLI. Su flujo de control, ejecutado
-en memoria por ahora, es independiente:
-
-```text
-Caller ──► AnalyzeWeaponInputBoundary ──► AnalyzeWeaponInteractor
-                                                ├──► Game (una vez por arma rival)
-                                                └──► AnalyzeWeaponOutputBoundary
-```
+En ambas ramas, una selección de arma inválida cruza
+`InvalidInputOutputBoundary` y termina en la vista correspondiente sin ejecutar
+el interactor. Un comando ausente o con una cantidad incorrecta de argumentos es
+rechazado antes por `CliCommandRouter` mostrando el contrato de uso.
 
 `JsonGamePresenter` ocupa los dos lugares del presenter en esta composición.
 Entrega a `GameView.showResult` un ViewModel cuyo `fullOutput` es una única línea
@@ -226,6 +235,7 @@ sin que el código de la política interna importe el mecanismo exterior.
 | Usar otra estrategia para elegir al oponente | Implementación de `OpponentWeaponProvider` y `main.ts` | No |
 | Probar una ronda con datos deterministas | Doubles bajo `tests` | No |
 | Agregar el análisis de un arma | Contratos e interactor propios en `application` y sus tests | No; reutiliza `Game` |
+| Exponer otro caso de uso en CLI | Router, controller, presenter, ViewModel, vista y `main.ts` | No |
 
 Cambiar las reglas de qué arma vence a cuál sí debe modificar el dominio: esa es
 su responsabilidad, no una fuga arquitectónica.

@@ -1,25 +1,25 @@
 import type {
-    PlayGameInputBoundary,
-} from '../../application/ports/input/PlayGameInputBoundary';
+    AnalyzeWeaponInputBoundary,
+} from '../../application/ports/input/AnalyzeWeaponInputBoundary';
 import type {
     InvalidInputOutputBoundary,
 } from '../ports/InvalidInputOutputBoundary';
 import { parseWeaponSelection } from './parseWeaponSelection';
 
-export class GameController {
+export class AnalyzeWeaponController {
     constructor(
-        private readonly playGame: PlayGameInputBoundary,
+        private readonly analyzeWeapon: AnalyzeWeaponInputBoundary,
         private readonly invalidInputOutput: InvalidInputOutputBoundary,
     ) {}
 
-    handle(rawSelection: string): void {
-        const playerWeapon = parseWeaponSelection(rawSelection);
+    handle(rawWeapon: string): void {
+        const weapon = parseWeaponSelection(rawWeapon);
 
-        if (!playerWeapon) {
+        if (!weapon) {
             this.invalidInputOutput.presentInvalidSelection();
             return;
         }
 
-        this.playGame.execute({ playerWeapon });
+        this.analyzeWeapon.execute({ weapon });
     }
 }
