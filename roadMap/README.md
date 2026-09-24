@@ -4,8 +4,8 @@
 
 Este roadmap usa Rock-Paper-Scissors para aprender Clean Architecture mediante
 cambios pequeños y verificables. Las fases 1 y 2 construyeron la base actual; la
-fase 3 propone ejercicios para estudiar el capítulo 16, **Independence**, de
-Robert C. Martin.
+fase 3 estudia el capítulo 16, **Independence**, y la fase 4 practica el
+capítulo 18, **Boundary Anatomy**, de Robert C. Martin.
 Cada archivo contiene un objetivo, una práctica y criterios de verificación.
 
 ## Reglas del roadmap
@@ -92,13 +92,58 @@ duplicación, operación y modos de desacoplamiento aparecen en reflexiones brev
 3. Responde las preguntas de reflexión y marca el ejercicio como completado en
    su archivo y en este índice. Las notas pueden ser breves y personales.
 
-Los ejercicios están pendientes y no incluyen soluciones. Los nombres nuevos
-son piezas a implementar. La práctica mantiene el alcance pequeño: un presenter,
+Los tres ejercicios están completados; sus archivos conservan los enunciados,
+las reflexiones y los refinamientos posteriores. La práctica abarcó un presenter,
 un caso de uso probado en memoria y una ejecución del build en una carpeta aislada.
 
 Son propuestas originales para este proyecto. Como referencia del capítulo,
 consulta el [índice del editor](https://www.informit.com/store/clean-architecture-a-craftsmans-guide-to-software-structure-9780134494166)
 y el [inicio del capítulo en O'Reilly](https://www.oreilly.com/library/view/clean-architecture-a/9780134494272/ch16.xhtml).
+
+## Fase 4 — Capítulo 18: Boundary Anatomy
+
+La pregunta que guía esta fase es: **¿qué cruza un boundary y qué dependencias
+quedan a cada lado?** Son **tres ejercicios**, con un tiempo total orientativo
+de **60–90 minutos**, sobre el comando `analyze` que ya existe.
+
+### Lecciones que vas a practicar
+
+1. **Flujo de control y dependencia de código son cosas distintas.** El interactor
+   puede llamar a un presenter exterior mediante un contrato de `application`.
+   La interfaz y su inyección protegen al caso de uso de detalles de presentación.
+2. **Un monolito puede tener boundaries efectivos.** Compartir proceso permite
+   llamadas en memoria; proteger los límites exige controlar los imports,
+   incluidos los de tipos. Las reglas automáticas tienen un coste de mantenimiento.
+3. **Cruzar procesos cambia el mecanismo y el coste de comunicación.** El consumidor
+   intercambia argumentos, JSON y códigos de salida; debe manejar serialización,
+   espera y fallos del proceso. Separar procesos no convierte automáticamente cada
+   componente interno en una unidad de despliegue independiente.
+
+### Ruta de ejercicios
+
+Orden recomendado: **33 → 34 → 35**. Los tres parten del estado actual descrito en
+[docs/README.md](../docs/README.md), incluida la extensión CLI de la tarea 31.
+Ninguno requiere conservar una implementación del ejercicio anterior.
+
+| # | Ejercicio | Qué aprenderás | Tiempo | Estado |
+|---|-----------|----------------|--------|--------|
+| 33 | [Seguir las dos direcciones de un boundary](./33-flujo-y-dependencias.md) | Contrastar llamadas reales e imports en el output boundary | 15–20 min | ⬜ |
+| 34 | [Poner a prueba un boundary del monolito](./34-boundary-en-monolito.md) | Detectar una dependencia prohibida aunque el programa siga funcionando | 20–30 min | ⬜ |
+| 35 | [Cruzar un límite de proceso con el CLI](./35-boundary-entre-procesos.md) | Consumir el mismo análisis mediante un protocolo y observar sus fallos | 25–40 min | ⬜ |
+
+Usa la versión de Node de `.nvmrc`. Antes de cada práctica, predice qué archivos
+deberían cambiar; al terminar, contrasta la predicción con el diff y las
+comprobaciones indicadas. Registra solo unas líneas de evidencia y reflexión en
+el archivo del ejercicio. Marca ambos estados como ✅ únicamente al resolverlo.
+
+Los enunciados están pendientes y no incluyen la implementación. La ruta reutiliza
+las pruebas y el CLI actuales: el segundo ejercicio revierte su infracción
+deliberada y el tercero añade únicamente un pequeño consumidor de laboratorio.
+Los threads, los componentes desplegables y los servicios se conectan mediante
+reflexiones breves, sin añadir infraestructura a la práctica.
+
+Son propuestas originales para este proyecto, vinculadas a los apartados del
+capítulo en el [índice del editor](https://www.informit.com/store/clean-architecture-a-craftsmans-guide-to-software-structure-9780134494166).
 
 ## Arquitectura histórica al finalizar la fase 1
 
